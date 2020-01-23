@@ -29,7 +29,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final MainModel _model = MainModel();
-  final MainModel test = MainModel();
 
   bool _isAuthenticated = false;
 
@@ -38,13 +37,14 @@ class _MyAppState extends State<MyApp> {
     _model.userSubject.listen((bool isAuthenticated) {
       setState(() {
         _isAuthenticated = isAuthenticated;
-        // test.fetchFasnacht();
+        //test.fetchFasnacht();
       });
     });
     super.initState();
   }
 
   build(BuildContext context) {
+    //String y = _model.fasnachtDateStart;
     String v = "2019-02-24 00:01:00";
 
     if (DateTime.parse(v).isAfter(DateTime.now())) {

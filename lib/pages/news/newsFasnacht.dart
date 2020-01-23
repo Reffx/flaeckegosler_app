@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
-
 import 'package:scoped_model/scoped_model.dart';
-import '../../models/fasnacht_date.dart';
 
 import '../../widgets/news/news.dart';
 import '../../scoped-models/main.dart';
@@ -31,7 +29,7 @@ class NewsPageFasnacht extends StatefulWidget {
 class _NewsPageState extends State<NewsPageFasnacht> {
   @override
   initState() {
-    //  widget.model.fetchFasnacht();
+    widget.model.fetchFasnacht();
     widget.model.fetchProducts();
     super.initState();
   }
@@ -46,18 +44,20 @@ class _NewsPageState extends State<NewsPageFasnacht> {
           );
           if (model.allNews.length > 0 && !model.isLoading) {
             content = ListView(children: <Widget>[
-            NewsWidget(), 
-            _buildLove(),
-            _buildVersion(),
-            Image.asset(
-              'assets/zapfen.png',
-              fit: BoxFit.fitWidth,
-            )]);
+              _countdown(),
+              NewsWidget(),
+              _buildLove(),
+              _buildVersion(),
+               Image.asset(
+                'assets/zapfen.png',
+                fit: BoxFit.fitWidth,
+              ) 
+            ]);
           } else if (model.isLoading) {
             content = Container(); //if it's loading return empty container
           }
           return RefreshIndicator(
-              onRefresh: model.fetchProducts, child: content);
+            onRefresh: model.fetchProducts, child: content);
         },
       ),
     );
@@ -78,7 +78,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
             }
           },
           child: Text(
-            ' Version 1.2.0 ',
+            ' Version 1.2.1 ',
             style: TextStyle(
               fontSize: 12.0,
               // fontWeight: FontWeight.bold,
@@ -89,6 +89,91 @@ class _NewsPageState extends State<NewsPageFasnacht> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _countdown() {
+    return Container(
+      child: ScopedModelDescendant(
+          builder: (BuildContext context, Widget child, MainModel model) {
+        if (DateTime.parse(model.fasnachtDateStart).isAfter(DateTime.now())) {
+          var date1 = DateTime.parse(model.fasnachtDateStart);
+          var _counterSeconds = date1.difference(DateTime.now()).inSeconds % 60;
+          var _counterMinutes = date1.difference(DateTime.now()).inMinutes % 60;
+          var _counterHours = date1.difference(DateTime.now()).inHours % 24;
+          var _counterDays = date1.difference(DateTime.now()).inDays;
+          String _days;
+          if (_counterDays == 1) {
+            _days = 'Tag';
+          } else {
+            _days = 'Tage';
+          }
+          String _hours;
+          if (_counterHours == 1) {
+            _hours = 'Stunde';
+          } else {
+            _hours = 'Stunden';
+          }
+          String _minutes;
+          if (_counterMinutes == 1) {
+            _minutes = 'Minute';
+          } else {
+            _minutes = 'Minuten';
+          }
+          String _seconds;
+          if (_counterSeconds == 1) {
+            _seconds = 'Sekunde';
+          } else {
+            _seconds = 'Sekunden';
+          }
+          Timer.periodic(Duration(seconds: 1), (timer) {
+            setState(() {
+              _counterSeconds--;
+              _seconds = 'doumb';
+            });
+          });
+          Timer.periodic(Duration(minutes: 1), (timer) {
+            setState(() {
+              _counterMinutes--;
+            });
+          });
+          Timer.periodic(Duration(hours: 1), (timer) {
+            setState(() {
+              _counterHours--;
+            });
+          });
+          Timer.periodic(Duration(days: 1), (timer) {
+            setState(() {
+              _counterDays--;
+            });
+          });
+          return Container(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
+              child: Container(
+                height: 30,
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: Text(
+                    ' ${_counterDays} ${_days}, ${_counterHours} ${_hours}, ${_counterMinutes} ${_minutes}, ${_counterSeconds} ${_seconds} ',
+                    style: TextStyle(
+                      height: 1.6,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Oswald',
+                      color: Colors.white,
+                      background: Paint()..color = Colors.black,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        } else {
+          return SizedBox(
+            height: 0,
+          );
+        }
+      }),
     );
   }
 
@@ -139,18 +224,18 @@ class _NewsPageState extends State<NewsPageFasnacht> {
               ),
             ),
             actions: <Widget>[
-               IconButton(
-                  icon: Icon(Icons.event),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/ticker');
-                  },
-                ),
               IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Navigator.pushNamed(context, '/programm');
-              },
-            ),
+                icon: Icon(Icons.event),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/ticker');
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/programm');
+                },
+              ),
             ],
           ),
         ],

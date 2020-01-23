@@ -19,7 +19,7 @@ mixin ConnectedNewsModel on Model {
   String _selNewsId;
   User _authenticatedUser;
   bool _isLoading = false;
-  FasnachtsDate _fasnacht;
+  List<FasnachtsDate> _fasnachtDate;
 }
 
 mixin EventModel on ConnectedNewsModel {
@@ -172,11 +172,11 @@ mixin NewsModel on ConnectedNewsModel {
   }
 
   String get fasnachtDateStart {
-    return _fasnacht.start;
+    return _fasnachtDate.first.start;
   }
 
   String get fasnachtDateEnd {
-    return _fasnacht.end;
+    return _fasnachtDate.first.end;
   }
 
   int get selectedNewsIndex {
@@ -198,20 +198,27 @@ mixin NewsModel on ConnectedNewsModel {
     });
   }
 
-  /*  void fetchFasnacht() {
-    http
-        .get('https://flutter-products-6da30.firebaseio.com/fasnacht.json')
-        .then((http.Response response) {
-      print(json.decode(response.body));
-      final Map<String, dynamic> fasnachtData = json.decode(response.body);
+  Future<bool> fetchFasnacht() {
+    return http
+        .get('https://flutter-products-6da30.firebaseio.com/fasnachtDate.json')
+        .then<Null>((http.Response response) {
       //  fetchedDataList.add(fasnachtData);
-      final FasnachtsDate _fasnachtDate =
-          FasnachtsDate(start: fasnachtData['start'], end: fasnachtData['end']);
-      _fasnacht = _fasnachtDate;
-      print(_fasnacht);
+      final List<FasnachtsDate> fetchedFasnachtsDate = [];
+      final Map<String, dynamic> dateListData = json.decode(response.body);
+
+      dateListData.forEach((String dateId, dynamic dateData) {
+        final FasnachtsDate date = FasnachtsDate(
+            id: dateId.toString(),
+            start: dateData['startDate'],
+            end: dateData['endDate'],);
+            fetchedFasnachtsDate.add(date);
+           });
+           _fasnachtDate = fetchedFasnachtsDate;
+           return;
+    }).catchError((error) {
       return;
-    });
-  }  */
+    }); 
+  }
 
   Future<bool> fetchProducts() {
     _isLoading = true;

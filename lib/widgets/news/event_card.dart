@@ -13,31 +13,10 @@ class EventCard extends StatelessWidget {
   EventCard(this.event, this.eventIndex);
 
   Widget _buildEventRowTime() {
-    if (event.playTime.startsWith("2019")) {
-      var formatter = new DateFormat("H:mm");
-      DateTime v = DateTime.parse(event.playTime);
-      String x = formatter.format(v);
       return Row(children: <Widget>[
         Container(
           child: Text(
-            ' ' + x + ' Uhr ',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              height: 1.2,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Oswald',
-              color: Colors.black,
-              background: Paint()..color = Colors.white,
-            ),
-          ),
-        ),
-      ]);
-    } else
-      return Row(children: <Widget>[
-        Container(
-          child: Text(
-            event.playTime,
+            ' ' + event.playTime + ' ',
             textAlign: TextAlign.start,
             style: TextStyle(
               height: 1.2,
@@ -55,7 +34,7 @@ class EventCard extends StatelessWidget {
   Widget _buildEventRowLocation() {
     return Row(children: <Widget>[
       Container(
-        padding: EdgeInsets.only(left: 60),
+        padding: EdgeInsets.only(left: 60, top: 10),
         child: Text(
           ' ' + event.location + ' ',
           textAlign: TextAlign.start,
@@ -75,12 +54,12 @@ class EventCard extends StatelessWidget {
   Widget _buildEventRowCity() {
     return Row(children: <Widget>[
       Container(
-        padding: EdgeInsets.only(left: 120),
+        padding: EdgeInsets.only(left: 120, top: 10),
         child: Text(
           ' ' + event.city + ' ',
           textAlign: TextAlign.start,
           style: TextStyle(
-            height: 1.3,
+            height: 1.2,
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
             fontFamily: 'Oswald',

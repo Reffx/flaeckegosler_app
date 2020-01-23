@@ -15,7 +15,7 @@ class NewsCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: 5),
       child: Text(
-        news.newsTitle,
+        ' ' + news.newsTitle + ' ',
         textAlign: TextAlign.start,
         style: TextStyle(
           height: 1.8,
