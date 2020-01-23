@@ -17,27 +17,6 @@ class TickerPage extends StatefulWidget {
 
 int _k = 5;
 
-/* String event1 = "2019-02-19 17:48:12";
-String event2 = "2019-02-18 17:48:12";
-String event3 = "2019-02-12 17:48:12";
-String event4 = "2019-02-17 17:48:12";
-String event5 = "2019-02-16 17:48:12";
-
-void sortedList() {
-  List<String> neu;
-  neu.add(event1);
-  neu.add(event2);
-  neu.add(event3);
-  neu.add(event4);
-  neu.add(event5);
-  List<DateTime> neuDate;
-  neu.forEach((String event) {
-    neuDate.add(DateTime.parse(event));
-  });
-  neuDate.sort();
-  print(neuDate);
-} */
-
 DecorationImage _buildBackgroundImage() {
   return DecorationImage(
     fit: BoxFit.cover,
@@ -51,7 +30,11 @@ Widget _buildTickerList() {
   return ScopedModelDescendant(
       builder: (BuildContext context, Widget child, MainModel model) {
     Widget content = Center(
-        child: Text('Nichts gefunden, überprüfe deine Internetverbindung!'));
+      child: Text(
+        'Zur Zeit wird kein Live-Ticker geführt!',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+    );
     if (model.allEvents.length > 0 && !model.isLoading) {
       content = EventWidget();
     } else if (model.isLoading) {
@@ -85,7 +68,6 @@ Widget _buildTitelTicker() {
   );
 }
 
-
 class _TickerStatePage extends State<TickerPage> {
   @override
   initState() {
@@ -102,15 +84,7 @@ class _TickerStatePage extends State<TickerPage> {
         return Future.value(false);
       },
       child: Scaffold(
-        appBar: AppBar(actions: <Widget>[
-           IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Navigator.pushNamed(context, '/programm');
-              },
-            ),
-          
-        ]),
+        appBar: AppBar(),
         body: Container(
           decoration: BoxDecoration(
             image: _buildBackgroundImage(),

@@ -12,16 +12,19 @@ class NewsCard extends StatelessWidget {
   NewsCard(this.news, this.newsIndex);
 
   Widget _buildTitle() {
-    return Text(
-      news.newsTitle,
-      textAlign: TextAlign.start,
-      style: TextStyle(
-        height: 1.2,
-        fontSize: 22.0,
-        fontWeight: FontWeight.bold,
-        fontFamily: 'Oswald',
-        color: Colors.black,
-        background: Paint()..color = Colors.white,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 5),
+      child: Text(
+        news.newsTitle,
+        textAlign: TextAlign.start,
+        style: TextStyle(
+          height: 1.8,
+          fontSize: 20.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Oswald',
+          color: Colors.black,
+          background: Paint()..color = Colors.white,
+        ),
       ),
     );
   }

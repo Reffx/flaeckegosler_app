@@ -31,32 +31,36 @@ class NewsPageFasnacht extends StatefulWidget {
 class _NewsPageState extends State<NewsPageFasnacht> {
   @override
   initState() {
-  //  widget.model.fetchFasnacht();
+    //  widget.model.fetchFasnacht();
     widget.model.fetchProducts();
     super.initState();
   }
 
   Widget _buildNewsList() {
-    return Column(children: <Widget>[
-      ScopedModelDescendant(
-          builder: (BuildContext context, Widget child, MainModel model) {
-        Widget content = Center(
+    return Container(
+      child: ScopedModelDescendant(
+        builder: (BuildContext context, Widget child, MainModel model) {
+          Widget content = Center(
             child: Text(
-                'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'));
-        if (model.allNews.length > 0 && !model.isLoading) {
-          content = NewsWidget();
-        } else if (model.isLoading) {
-          content = Column(
-            children: <Widget>[
-              SizedBox(height: 50),
-              CircularProgressIndicator(),
-              SizedBox(height: 800)
-            ],
+                'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
           );
-        }
-        return RefreshIndicator(onRefresh: model.fetchProducts, child: content);
-      })
-    ]);
+          if (model.allNews.length > 0 && !model.isLoading) {
+            content = ListView(children: <Widget>[
+            NewsWidget(), 
+            _buildLove(),
+            _buildVersion(),
+            Image.asset(
+              'assets/zapfen.png',
+              fit: BoxFit.fitWidth,
+            )]);
+          } else if (model.isLoading) {
+            content = Container(); //if it's loading return empty container
+          }
+          return RefreshIndicator(
+              onRefresh: model.fetchProducts, child: content);
+        },
+      ),
+    );
   }
 
   int _i = 5;
@@ -107,8 +111,8 @@ class _NewsPageState extends State<NewsPageFasnacht> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: new CustomScrollView(
-        slivers: <Widget>[
+      body: new NestedScrollView(
+        headerSliverBuilder: (context, innerBoxScrolled) => [
           SliverAppBar(
             leading:
                 Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight),
@@ -129,46 +133,28 @@ class _NewsPageState extends State<NewsPageFasnacht> {
                 ],
               ),
               centerTitle: true,
-              /*   title: Image.asset(
-                'assets/diadamas.png',
-                height: 30,
-                fit: BoxFit.fitHeight,
-              ), */
               background: Image.asset(
                 'assets/appBarJubi.png',
                 fit: BoxFit.fitHeight,
               ),
             ),
             actions: <Widget>[
-              Container(
-                padding: EdgeInsets.only(right: 20),
-                child: IconButton(
+               IconButton(
                   icon: Icon(Icons.event),
                   onPressed: () {
                     Navigator.pushNamed(context, '/ticker');
                   },
                 ),
-              ),
+              IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                Navigator.pushNamed(context, '/programm');
+              },
+            ),
             ],
           ),
-          SliverList(
-              delegate: new SliverChildListDelegate([
-            Column(
-              children: <Widget>[
-                _buildNewsList(),
-                _buildLove(),
-                _buildVersion(),
-                Image.asset(
-                  'assets/zapfen.png',
-                  fit: BoxFit.fitWidth,
-                ),
-              ],
-            )
-          ])
-              /*  SliverFillRemaining(
-            child: Container(child: _buildNewsList()),*/
-              ),
         ],
+        body: _buildNewsList(),
       ),
     );
   }

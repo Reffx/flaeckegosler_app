@@ -17,7 +17,7 @@ class NewsWidget extends StatelessWidget {
         physics: ClampingScrollPhysics(),
         itemBuilder: (BuildContext context, int index) =>
             NewsCard(news[index], index),
-        itemCount: 10, //news.length
+        itemCount: 12, //news.length
       );
     } else {
       newsCards = Container();

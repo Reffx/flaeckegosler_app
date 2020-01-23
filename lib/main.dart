@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter/rendering.dart';
+import './scoped-models/main.dart';
 
 import './pages/news/news.dart';
 import './pages/news/newsFasnacht.dart';
@@ -10,8 +11,8 @@ import './pages/info.dart';
 import './pages/programm.dart';
 import './pages/ticker.dart';
 import './pages/event_admin.dart';
-import './scoped-models/main.dart';
 import './pages/single_news.dart';
+
 import './models/news.dart';
 
 void main() {
@@ -44,12 +45,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   build(BuildContext context) {
-    //  return ScopedModelDescendant<MainModel>(
-//        builder: (BuildContext context, Widget child, MainModel test) {
-    //  String myFasnachtStart = test.fasnachtDateStart;
-    //    String myFasnachtEnd = test.fasnachtDateEnd;
-    // print(myFasnachtStart);
-    // print(myFasnachtEnd);
     String v = "2019-02-24 00:01:00";
 
     if (DateTime.parse(v).isAfter(DateTime.now())) {
@@ -100,7 +95,6 @@ class _MyAppState extends State<MyApp> {
         model: _model,
         child: MaterialApp(
           theme: ThemeData(
-              //brightness: Brightness.dark,
               primarySwatch: Colors.brown,
               accentColor: Colors.brown,
               buttonColor: Colors.white),
@@ -137,6 +131,5 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     }
-//    });
   }
 }

@@ -42,8 +42,8 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          //  leading: Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight),
-          title: Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight),
+          leading: Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight,),
+          //title: Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.menu),

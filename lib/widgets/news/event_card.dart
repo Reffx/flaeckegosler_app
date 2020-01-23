@@ -108,19 +108,6 @@ class EventCard extends StatelessWidget {
               _buildEventRowCity(),
             ],
           ),
-          /* height: 120, */
-          //MediaQuery.of(context).size.height,
-          // width: MediaQuery.of(context).size.width,
-          /* decoration: BoxDecoration(
-            border: new Border(
-              left: BorderSide(color: Colors.white, width: 10.0),
-              top: BorderSide(color: Colors.white, width: 10.0),
-              right: BorderSide(color: Colors.white, width: 10.0),
-              bottom: BorderSide(color: Colors.white, width: 0.0),
-            ),
-            //borderRadius: BorderRadius.circular(15),
-            color: Colors.white,
-          ), */
         ),
       );
     });
