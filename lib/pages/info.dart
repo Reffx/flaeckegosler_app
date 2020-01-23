@@ -49,7 +49,7 @@ class _InfoPageState extends State<InfoPage> {
                       }
                     },
                     child: Text(
-                      ' Version 1.1.2 ',
+                      ' Version 1.2.0 ',
                       style: TextStyle(
                         fontSize: 22.0,
                         fontWeight: FontWeight.bold,
