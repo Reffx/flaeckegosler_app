@@ -93,7 +93,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
             }
           },
           child: Text(
-            ' Version 1.2.1 ',
+            ' Version 1.2.2 ',
             style: TextStyle(
               fontSize: 12.0,
               // fontWeight: FontWeight.bold,
