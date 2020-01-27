@@ -1,4 +1,8 @@
+import 'package:Flaeckegosler/models/fasnacht_date.dart';
+import 'package:Flaeckegosler/widgets/countdown/countdown.dart';
+import 'package:Flaeckegosler/widgets/ui_elements/madeWithLove.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
@@ -27,11 +31,21 @@ class NewsPageFasnacht extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPageFasnacht> {
+  var _isInit = true;
+
   @override
   initState() {
-    widget.model.fetchFasnacht();
     widget.model.fetchProducts();
     super.initState();
+  }
+
+    @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      Provider.of<FasnachtsDates>(context).fetchFasnacht();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   Widget _buildNewsList() {
@@ -43,10 +57,11 @@ class _NewsPageState extends State<NewsPageFasnacht> {
                 'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
           );
           if (model.allNews.length > 0 && !model.isLoading) {
-            content = ListView(children: <Widget>[
-              _countdown(),
+            content = ListView(
+              children: <Widget>[
+              Countdown(),
               NewsWidget(),
-              _buildLove(),
+              MadeWithLoveWidget(),
               _buildVersion(),
                Image.asset(
                 'assets/zapfen.png',
@@ -91,107 +106,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
       ),
     );
   }
-
-  Widget _countdown() {
-    return Container(
-      child: ScopedModelDescendant(
-          builder: (BuildContext context, Widget child, MainModel model) {
-        if (DateTime.parse(model.fasnachtDateStart).isAfter(DateTime.now())) {
-          var date1 = DateTime.parse(model.fasnachtDateStart);
-          var _counterSeconds = date1.difference(DateTime.now()).inSeconds % 60;
-          var _counterMinutes = date1.difference(DateTime.now()).inMinutes % 60;
-          var _counterHours = date1.difference(DateTime.now()).inHours % 24;
-          var _counterDays = date1.difference(DateTime.now()).inDays;
-          String _days;
-          if (_counterDays == 1) {
-            _days = 'Tag';
-          } else {
-            _days = 'Tage';
-          }
-          String _hours;
-          if (_counterHours == 1) {
-            _hours = 'Stunde';
-          } else {
-            _hours = 'Stunden';
-          }
-          String _minutes;
-          if (_counterMinutes == 1) {
-            _minutes = 'Minute';
-          } else {
-            _minutes = 'Minuten';
-          }
-          String _seconds;
-          if (_counterSeconds == 1) {
-            _seconds = 'Sekunde';
-          } else {
-            _seconds = 'Sekunden';
-          }
-          Timer.periodic(Duration(seconds: 1), (timer) {
-            setState(() {
-              _counterSeconds--;
-              _seconds = 'doumb';
-            });
-          });
-          Timer.periodic(Duration(minutes: 1), (timer) {
-            setState(() {
-              _counterMinutes--;
-            });
-          });
-          Timer.periodic(Duration(hours: 1), (timer) {
-            setState(() {
-              _counterHours--;
-            });
-          });
-          Timer.periodic(Duration(days: 1), (timer) {
-            setState(() {
-              _counterDays--;
-            });
-          });
-          return Container(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
-              child: Container(
-                height: 30,
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: Text(
-                    ' ${_counterDays} ${_days}, ${_counterHours} ${_hours}, ${_counterMinutes} ${_minutes}, ${_counterSeconds} ${_seconds} ',
-                    style: TextStyle(
-                      height: 1.6,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Oswald',
-                      color: Colors.white,
-                      background: Paint()..color = Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          );
-        } else {
-          return SizedBox(
-            height: 0,
-          );
-        }
-      }),
-    );
-  }
-
-  Widget _buildLove() {
-    return Container(
-      padding: EdgeInsets.only(top: 20, bottom: 20),
-      child: Text(
-        'Made with ♥ in Rothenburg',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 12.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Oswald',
-          color: Colors.black,
-        ),
-      ),
-    );
-  }
+    
 
   @override
   Widget build(BuildContext context) {

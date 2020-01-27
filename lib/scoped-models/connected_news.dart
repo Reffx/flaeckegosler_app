@@ -19,14 +19,12 @@ mixin ConnectedNewsModel on Model {
   String _selNewsId;
   User _authenticatedUser;
   bool _isLoading = false;
-  List<FasnachtsDate> _fasnachtDate;
 }
 
 mixin EventModel on ConnectedNewsModel {
   List<Event> get allEvents {
     return List.from(_events);
   }
-
 
   int get selectedEventIndex {
     return _events.indexWhere((Event event) {
@@ -147,9 +145,9 @@ mixin EventModel on ConnectedNewsModel {
           userEmail: eventData['userEmail'],
           userId: eventData['userId'],
         );
-          if (DateTime.parse(event.predictedPlayTime).isAfter(DateTime.now())) {
-        fetchtedEventList.add(event);
-        } 
+        if (DateTime.parse(event.predictedPlayTime).isAfter(DateTime.now())) {
+          fetchtedEventList.add(event);
+        }
       });
       _events = fetchtedEventList;
       _isLoading = false;
@@ -171,13 +169,6 @@ mixin NewsModel on ConnectedNewsModel {
     return List.from(_news);
   }
 
-  String get fasnachtDateStart {
-    return _fasnachtDate.first.start;
-  }
-
-  String get fasnachtDateEnd {
-    return _fasnachtDate.first.end;
-  }
 
   int get selectedNewsIndex {
     return _news.indexWhere((News news) {
@@ -196,28 +187,6 @@ mixin NewsModel on ConnectedNewsModel {
     return _news.firstWhere((News news) {
       return news.id == _selNewsId;
     });
-  }
-
-  Future<bool> fetchFasnacht() {
-    return http
-        .get('https://flutter-products-6da30.firebaseio.com/fasnachtDate.json')
-        .then<Null>((http.Response response) {
-      //  fetchedDataList.add(fasnachtData);
-      final List<FasnachtsDate> fetchedFasnachtsDate = [];
-      final Map<String, dynamic> dateListData = json.decode(response.body);
-
-      dateListData.forEach((String dateId, dynamic dateData) {
-        final FasnachtsDate date = FasnachtsDate(
-            id: dateId.toString(),
-            start: dateData['startDate'],
-            end: dateData['endDate'],);
-            fetchedFasnachtsDate.add(date);
-           });
-           _fasnachtDate = fetchedFasnachtsDate;
-           return;
-    }).catchError((error) {
-      return;
-    }); 
   }
 
   Future<bool> fetchProducts() {

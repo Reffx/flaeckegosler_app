@@ -1,5 +1,7 @@
+import 'package:Flaeckegosler/models/fasnacht_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 import './scoped-models/main.dart';
@@ -89,45 +91,52 @@ class _MyAppState extends State<MyApp> {
         ),
       );
     } else {
-      return
-          //DateTime.parse(v).isBefore(DateTime.now())
-          ScopedModel<MainModel>(
-        model: _model,
-        child: MaterialApp(
-          theme: ThemeData(
-              primarySwatch: Colors.brown,
-              accentColor: Colors.brown,
-              buttonColor: Colors.white),
-          // home: AuthPage(), //only works wihtout '/' not used
-          routes: {
-            '/': (BuildContext context) => NewsPageFasnacht(_model),
-            '/news': (BuildContext context) => NewsPageFasnacht(_model),
-            '/info': (BuildContext context) => InfoPage(),
-            '/ticker': (BuildContext context) => TickerPage(_model),
-            '/programm': (BuildContext context) => ProgrammPage(),
-            '/auth': (BuildContext context) =>
-                !_isAuthenticated ? AuthPage() : EventAdminPage(),
-          },
-          onGenerateRoute: (RouteSettings settings) {
-            final List<String> pathElements = settings.name.split('/');
-            if (pathElements[0] != '') {
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (_) => FasnachtsDates(),
+          ),
+        ],
+        child:
+            //DateTime.parse(v).isBefore(DateTime.now())
+            ScopedModel<MainModel>(
+          model: _model,
+          child: MaterialApp(
+            theme: ThemeData(
+                primarySwatch: Colors.brown,
+                accentColor: Colors.brown,
+                buttonColor: Colors.white),
+            // home: AuthPage(), //only works wihtout '/' not used
+            routes: {
+              '/': (BuildContext context) => NewsPageFasnacht(_model),
+              '/news': (BuildContext context) => NewsPageFasnacht(_model),
+              '/info': (BuildContext context) => InfoPage(),
+              '/ticker': (BuildContext context) => TickerPage(_model),
+              '/programm': (BuildContext context) => ProgrammPage(),
+              '/auth': (BuildContext context) =>
+                  !_isAuthenticated ? AuthPage() : EventAdminPage(),
+            },
+            onGenerateRoute: (RouteSettings settings) {
+              final List<String> pathElements = settings.name.split('/');
+              if (pathElements[0] != '') {
+                return null;
+              }
+              if (pathElements[1] == 'specific_news') {
+                final String newsId = pathElements[2];
+                final News news = _model.allNews.firstWhere((News news) {
+                  return news.id == newsId;
+                });
+                return MaterialPageRoute<bool>(
+                  builder: (BuildContext context) => SingleNews(news),
+                );
+              }
               return null;
-            }
-            if (pathElements[1] == 'specific_news') {
-              final String newsId = pathElements[2];
-              final News news = _model.allNews.firstWhere((News news) {
-                return news.id == newsId;
-              });
-              return MaterialPageRoute<bool>(
-                builder: (BuildContext context) => SingleNews(news),
-              );
-            }
-            return null;
-          },
-          onUnknownRoute: (RouteSettings settings) {
-            return MaterialPageRoute(
-                builder: (BuildContext context) => NewsPageFasnacht(_model));
-          },
+            },
+            onUnknownRoute: (RouteSettings settings) {
+              return MaterialPageRoute(
+                  builder: (BuildContext context) => NewsPageFasnacht(_model));
+            },
+          ),
         ),
       );
     }
