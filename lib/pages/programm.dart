@@ -1,57 +1,106 @@
 import 'package:flutter/material.dart';
 
-DecorationImage _buildBackgroundImageDo() {
-  return DecorationImage(
-    fit: BoxFit.cover,
-    colorFilter:
-        ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
-    image: AssetImage('assets/backgrounds/background_diadamas_1.png'),
-  );
+DecorationImage _buildBackgroundImageDo(bool isNewLayout) {
+  if (isNewLayout) {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
+      image: AssetImage('assets/layout_2020/MUSTER_REPETIEREND.png'),
+    );
+  } else {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
+      image: AssetImage('assets/backgrounds/background_diadamas_1.png'),
+    );
+  }
 }
 
-DecorationImage _buildBackgroundImageFr() {
+DecorationImage _buildBackgroundImageFr(isNewLayout) {
+  if (isNewLayout) {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
+      image: AssetImage('assets/layout_2020/MUSTER_REPETIEREND_mirrored.png'),
+    );
+  } else {
   return DecorationImage(
     fit: BoxFit.cover,
     colorFilter:
         ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
     image: AssetImage('assets/backgrounds/background_diadamas_2.png'),
-  );
+  );}
 }
 
-DecorationImage _buildBackgroundImageSa() {
+DecorationImage _buildBackgroundImageSa(isNewLayout) {
+  if (isNewLayout) {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
+      image: AssetImage('assets/layout_2020/MUSTER_REPETIEREND.png'),
+    );
+  } else {
   return DecorationImage(
     fit: BoxFit.cover,
     colorFilter:
         ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
     image: AssetImage('assets/backgrounds/background_diadamas_3.png'),
-  );
+  );}
 }
 
-DecorationImage _buildBackgroundImageSo() {
+DecorationImage _buildBackgroundImageSo(isNewLayout) {
+ if (isNewLayout) {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
+      image: AssetImage('assets/layout_2020/MUSTER_REPETIEREND_mirrored.png'),
+    );
+  } else {
   return DecorationImage(
     fit: BoxFit.cover,
     colorFilter:
         ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
     image: AssetImage('assets/backgrounds/background_diadamas_4.png'),
-  );
+  );}
 }
 
-DecorationImage _buildBackgroundImageMo() {
+DecorationImage _buildBackgroundImageMo(isNewLayout) {
+ if (isNewLayout) {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
+      image: AssetImage('assets/layout_2020/MUSTER_REPETIEREND.png'),
+    );
+  } else {
   return DecorationImage(
     fit: BoxFit.cover,
     colorFilter:
         ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
     image: AssetImage('assets/backgrounds/background_diadamas_5.png'),
-  );
+  );}
 }
 
-DecorationImage _buildBackgroundImageDi() {
+DecorationImage _buildBackgroundImageDi(isNewLayout) {
+  if (isNewLayout) {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.7), BlendMode.dstATop),
+      image: AssetImage('assets/layout_2020/emptygrey.png'),
+    );
+  } else {
   return DecorationImage(
     fit: BoxFit.cover,
     colorFilter:
         ColorFilter.mode(Colors.black.withOpacity(0.6), BlendMode.dstATop),
     image: AssetImage('assets/backgrounds/background_diadamas_3.png'),
-  );
+  );}
 }
 
 TextStyle _buildProgrammTextStyle() {
@@ -66,10 +115,14 @@ TextStyle _buildProgrammTextStyle() {
 }
 
 class ProgrammPage extends StatelessWidget {
+  final bool isNewLayout;
+
+  ProgrammPage(this.isNewLayout);
+
   Widget _buildDo() {
     return Container(
       decoration: BoxDecoration(
-        image: _buildBackgroundImageDo(),
+        image: _buildBackgroundImageDo(isNewLayout),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -229,7 +282,7 @@ class ProgrammPage extends StatelessWidget {
   Widget _buildFr() {
     return Container(
       decoration: BoxDecoration(
-        image: _buildBackgroundImageFr(),
+        image: _buildBackgroundImageFr(isNewLayout),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -354,7 +407,7 @@ class ProgrammPage extends StatelessWidget {
   Widget _buildSa() {
     return Container(
       decoration: BoxDecoration(
-        image: _buildBackgroundImageSa(),
+        image: _buildBackgroundImageSa(isNewLayout),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -457,7 +510,7 @@ class ProgrammPage extends StatelessWidget {
   Widget _buildSo() {
     return Container(
       decoration: BoxDecoration(
-        image: _buildBackgroundImageSo(),
+        image: _buildBackgroundImageSo(isNewLayout),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -560,7 +613,7 @@ class ProgrammPage extends StatelessWidget {
   Widget _buildMo() {
     return Container(
       decoration: BoxDecoration(
-        image: _buildBackgroundImageMo(),
+        image: _buildBackgroundImageMo(isNewLayout),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -644,12 +697,94 @@ class ProgrammPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDi() {
-    return Container(
-      decoration: BoxDecoration(
-        image: _buildBackgroundImageDi(),
-      ),
-      child: Column(
+  Column _di(isNewLayout){
+    if (isNewLayout){
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'Güdis-Ziischtig',
+            style: TextStyle(
+              height: 1.2,
+              fontSize: 22.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Oswald',
+              color: Colors.black,
+              //background: Paint()..color = Colors.white,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '14.00',
+                style: _buildProgrammTextStyle(),
+              ),
+              SizedBox(width: 20),
+              Text(
+                'Kinderumzug,',
+                style: _buildProgrammTextStyle(),
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Rothenburg',
+                style: _buildProgrammTextStyle(),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Abend',
+                style: _buildProgrammTextStyle(),
+              ),
+              SizedBox(width: 20),
+              Text(
+                'Gässle,',
+                style: _buildProgrammTextStyle(),
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Luzern',
+                style: _buildProgrammTextStyle(),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '01.30',
+                style: _buildProgrammTextStyle(),
+              ),
+              SizedBox(width: 20),
+              Text(
+                'Schmette-Feete,',
+                style: _buildProgrammTextStyle(),
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Rothenburg',
+                style: _buildProgrammTextStyle(),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Image(
+          fit: BoxFit.cover,
+           image: AssetImage('assets/layout_2020/kopf_mythos.png'),
+           ),
+        ],
+      );}
+    else {
+    return 
+    Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
@@ -727,7 +862,16 @@ class ProgrammPage extends StatelessWidget {
             height: 150,
           ),
         ],
+      );
+      }
+  }
+
+  Widget _buildDi() {
+    return Container(
+      decoration: BoxDecoration(
+        image: _buildBackgroundImageDi(isNewLayout),
       ),
+      child: _di(isNewLayout),
     );
   }
 
@@ -754,7 +898,7 @@ class ProgrammPage extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             actions: <Widget>[
-              Padding(
+             /* Padding(
                 padding: EdgeInsets.all(15),
                 child: Text(
                   '(Programm 2020)',
@@ -763,7 +907,7 @@ class ProgrammPage extends StatelessWidget {
                     fontStyle: FontStyle.italic,
                   ),
                 ),
-              ),
+              ), */
               Padding(
                 padding: EdgeInsets.only(right: 10),
                 child: Image.asset('assets/goslergrend.png',

@@ -70,9 +70,9 @@ class _CountdownState extends State<Countdown> {
           child: Container(
             height: 30,
             child: FittedBox(
-              fit: BoxFit.cover,
+              fit: BoxFit.fitWidth,
               child: Text(
-                ' ${_counterDays} ${_days}, ${_counterHours} ${_hours}, ${_counterMinutes} ${_minutes}, ${_counterSeconds} ${_seconds} ',
+                ' ' +' ${_counterDays} ${_days}, ${_counterHours} ${_hours}, ${_counterMinutes} ${_minutes}, ${_counterSeconds} ${_seconds} ' + ' ',
                 style: TextStyle(
                   height: 1.6,
                   fontWeight: FontWeight.bold,

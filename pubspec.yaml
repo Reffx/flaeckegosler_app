@@ -87,8 +87,12 @@ flutter:
   - assets/backgrounds/background_diadamas_4.png
   - assets/backgrounds/background_diadamas_5.png
   - assets/layout_2020/goslermythos_title.png
+  - assets/layout_2020/kopf_mythos.png
+  - assets/layout_2020/emptygrey.png
   - assets/layout_2020/MUSTER_REPETIEREND.png
-
+  - assets/layout_2020/MUSTER_REPETIEREND_mirrored.png
+  - assets/layout_2020/MUSTER_REPETIEREND_apptitle.png
+  - assets/layout_2020/news_bottom.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

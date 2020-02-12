@@ -49,7 +49,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     super.didChangeDependencies();
   }
 
-  Widget _buildNewsList() {
+  Widget _buildNewsList(isNewLayout) {
     return Container(
       child: ScopedModelDescendant(
         builder: (BuildContext context, Widget child, MainModel model) {
@@ -63,10 +63,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
               NewsWidget(),
               MadeWithLoveWidget(),
               _buildVersion(),
-              Image.asset(
-                'assets/zapfen.png',
-                fit: BoxFit.fitWidth,
-              )
+              _getImageBottom(isNewLayout),
             ]);
           } else if (model.isLoading) {
             content = Container(); //if it's loading return empty container
@@ -107,6 +104,19 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     );
   }
 
+  Image _getImageBottom(bool isNewLayout) {
+    if (isNewLayout) {
+      return Image.asset(
+        'assets/layout_2020/news_bottom.png',
+        fit: BoxFit.fitWidth,
+      );
+    } else
+      return Image.asset(
+        'assets/zapfen.png',
+        fit: BoxFit.fitWidth,
+      );
+  }
+
   Image getImageTitle(bool isNewLayout) {
     if (isNewLayout) {
       return Image.asset(
@@ -123,7 +133,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
   Image getBackgroundImage(bool isNewLayout) {
     if (isNewLayout) {
       return Image.asset(
-        'assets/layout_2020/MUSTER_REPETIEREND.png',
+        'assets/layout_2020/MUSTER_REPETIEREND_apptitle.png',
         fit: BoxFit.fitWidth,
       );
     } else {
@@ -134,7 +144,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     }
   }
 
-  EdgeInsets getTitlePadding(bool isNewLayout){
+  EdgeInsets getTitlePadding(bool isNewLayout) {
     if (isNewLayout) {
       return EdgeInsets.only(top: 5, bottom: 5);
     } else {
@@ -177,7 +187,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
               ],
             ),
           ],
-          body: _buildNewsList(),
+          body: _buildNewsList(widget.isNewLayout),
         ),
       ),
     );

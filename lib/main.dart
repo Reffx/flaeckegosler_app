@@ -47,8 +47,8 @@ class _MyAppState extends State<MyApp> {
 
   build(BuildContext context) {
     //String y = _model.fasnachtDateStart;
-    String v = "2020-02-20 00:00:01";
-    bool isNewLayout = DateTime.parse(v).isAfter(DateTime.now());
+    String v = "2020-02-20 05:00:00";
+    bool isNewLayout = DateTime.parse(v).isBefore(DateTime.now());
 
     var myThemeData = getThemeData(isNewLayout);
 
@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
             '/news': (BuildContext context) => NewsPageFasnacht(_model, isNewLayout),
             '/info': (BuildContext context) => InfoPage(),
             '/ticker': (BuildContext context) => TickerPage(_model, isNewLayout),
-            '/programm': (BuildContext context) => ProgrammPage(),
+            '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
             '/auth': (BuildContext context) =>
                 !_isAuthenticated ? AuthPage() : EventAdminPage(),
           },
