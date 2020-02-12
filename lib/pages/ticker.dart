@@ -7,7 +7,8 @@ import './../scoped-models/main.dart';
 
 class TickerPage extends StatefulWidget {
   final MainModel model;
-  TickerPage(this.model);
+  final bool isNewLayout;
+  TickerPage(this.model, this.isNewLayout);
 
   @override
   State<StatefulWidget> createState() {
@@ -17,13 +18,22 @@ class TickerPage extends StatefulWidget {
 
 int _k = 5;
 
-DecorationImage _buildBackgroundImage() {
-  return DecorationImage(
-    fit: BoxFit.cover,
-    colorFilter:
-        ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
-    image: AssetImage('assets/background_diadamas.png'),
-  );
+DecorationImage _buildBackgroundImage(bool isNewLayout) {
+  if (isNewLayout) {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.9), BlendMode.dstATop),
+      image: AssetImage('assets/layout_2020/MUSTER_REPETIEREND.png'),
+    );
+  } else {
+    return DecorationImage(
+      fit: BoxFit.cover,
+      colorFilter:
+          ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
+      image: AssetImage('assets/background_diadamas.png'),
+    );
+  }
 }
 
 Widget _buildTickerList() {
@@ -87,7 +97,7 @@ class _TickerStatePage extends State<TickerPage> {
         appBar: AppBar(),
         body: Container(
           decoration: BoxDecoration(
-            image: _buildBackgroundImage(),
+            image: _buildBackgroundImage(widget.isNewLayout),
           ),
           child: new CustomScrollView(slivers: <Widget>[
             SliverList(

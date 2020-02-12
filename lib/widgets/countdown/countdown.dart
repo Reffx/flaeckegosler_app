@@ -66,7 +66,7 @@ class _CountdownState extends State<Countdown> {
       } 
       return Container(
         child: Padding(
-          padding: EdgeInsets.only(bottom: 20, left: 10, right: 10),
+          padding: EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 10),
           child: Container(
             height: 30,
             child: FittedBox(

@@ -23,7 +23,8 @@ Future launchURL(String url) async {
 
 class NewsPageFasnacht extends StatefulWidget {
   final MainModel model;
-  NewsPageFasnacht(this.model);
+  final bool isNewLayout;
+  NewsPageFasnacht(this.model, this.isNewLayout);
   @override
   State<StatefulWidget> createState() {
     return _NewsPageState();
@@ -39,7 +40,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     super.initState();
   }
 
-    @override
+  @override
   void didChangeDependencies() {
     if (_isInit) {
       Provider.of<FasnachtsDates>(context).fetchFasnacht();
@@ -57,22 +58,21 @@ class _NewsPageState extends State<NewsPageFasnacht> {
                 'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
           );
           if (model.allNews.length > 0 && !model.isLoading) {
-            content = ListView(
-              children: <Widget>[
+            content = ListView(children: <Widget>[
               Countdown(),
               NewsWidget(),
               MadeWithLoveWidget(),
               _buildVersion(),
-               Image.asset(
+              Image.asset(
                 'assets/zapfen.png',
                 fit: BoxFit.fitWidth,
-              ) 
+              )
             ]);
           } else if (model.isLoading) {
             content = Container(); //if it's loading return empty container
           }
           return RefreshIndicator(
-            onRefresh: model.fetchProducts, child: content);
+              onRefresh: model.fetchProducts, child: content);
         },
       ),
     );
@@ -106,55 +106,79 @@ class _NewsPageState extends State<NewsPageFasnacht> {
       ),
     );
   }
-    
+
+  Image getImageTitle(bool isNewLayout) {
+    if (isNewLayout) {
+      return Image.asset(
+        'assets/layout_2020/goslermythos_title.png',
+        height: 50,
+      );
+    } else
+      return Image.asset(
+        'assets/diadamas.png',
+        height: 40,
+      );
+  }
+
+  Image getBackgroundImage(bool isNewLayout) {
+    if (isNewLayout) {
+      return Image.asset(
+        'assets/layout_2020/MUSTER_REPETIEREND.png',
+        fit: BoxFit.fitWidth,
+      );
+    } else {
+      return Image.asset(
+        'assets/appBarJubi.png',
+        fit: BoxFit.fitHeight,
+      );
+    }
+  }
+
+  EdgeInsets getTitlePadding(bool isNewLayout){
+    if (isNewLayout) {
+      return EdgeInsets.only(top: 5, bottom: 5);
+    } else {
+      return EdgeInsets.only(top: 5, bottom: 15);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: new NestedScrollView(
-        headerSliverBuilder: (context, innerBoxScrolled) => [
-          SliverAppBar(
-            leading:
-                Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight),
-            pinned: true,
-            snap: false,
-            floating: false,
-            expandedHeight: 120.0,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/diadamas.png',
-                    height: 40,
-                  )
-                ],
+    return SafeArea(
+      child: Scaffold(
+        body: new NestedScrollView(
+          headerSliverBuilder: (context, innerBoxScrolled) => [
+            SliverAppBar(
+              leading:
+                  Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight),
+              pinned: true,
+              snap: false,
+              floating: false,
+              expandedHeight: 120.0,
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: getTitlePadding(widget.isNewLayout),
+                title: getImageTitle(widget.isNewLayout),
+                centerTitle: true,
+                background: getBackgroundImage(widget.isNewLayout),
               ),
-              centerTitle: true,
-              background: Image.asset(
-                'assets/appBarJubi.png',
-                fit: BoxFit.fitHeight,
-              ),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.event),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/ticker');
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/programm');
+                  },
+                ),
+              ],
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.event),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/ticker');
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/programm');
-                },
-              ),
-            ],
-          ),
-        ],
-        body: _buildNewsList(),
+          ],
+          body: _buildNewsList(),
+        ),
       ),
     );
   }

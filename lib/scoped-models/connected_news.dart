@@ -10,7 +10,6 @@ import '../models/news.dart';
 import '../models/user.dart';
 import '../models/auth.dart';
 import '../models/event.dart';
-import '../models/fasnacht_date.dart';
 
 mixin ConnectedNewsModel on Model {
   List<Event> _events = [];

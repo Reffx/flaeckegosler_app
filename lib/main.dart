@@ -47,24 +47,30 @@ class _MyAppState extends State<MyApp> {
 
   build(BuildContext context) {
     //String y = _model.fasnachtDateStart;
-    String v = "2019-02-24 00:01:00";
+    String v = "2020-02-20 00:00:01";
+    bool isNewLayout = DateTime.parse(v).isAfter(DateTime.now());
 
-    if (DateTime.parse(v).isAfter(DateTime.now())) {
-      return ScopedModel<MainModel>(
+    var myThemeData = getThemeData(isNewLayout);
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => FasnachtsDates(),
+        ),
+      ],
+      child:
+          //DateTime.parse(v).isBefore(DateTime.now())
+          ScopedModel<MainModel>(
         model: _model,
         child: MaterialApp(
-          theme: ThemeData(
-              brightness: Brightness.light,
-              primarySwatch: Colors.red,
-              accentColor: Colors.grey,
-              buttonColor: Colors.red),
+          theme: myThemeData,
           // home: AuthPage(), //only works wihtout '/' not used
           routes: {
-            '/': (BuildContext context) => NewsPage(_model),
-            '/news': (BuildContext context) => NewsPage(_model),
+            '/': (BuildContext context) => NewsPageFasnacht(_model, isNewLayout),
+            '/news': (BuildContext context) => NewsPageFasnacht(_model, isNewLayout),
             '/info': (BuildContext context) => InfoPage(),
+            '/ticker': (BuildContext context) => TickerPage(_model, isNewLayout),
             '/programm': (BuildContext context) => ProgrammPage(),
-            '/ticker': (BuildContext context) => TickerPage(_model),
             '/auth': (BuildContext context) =>
                 !_isAuthenticated ? AuthPage() : EventAdminPage(),
           },
@@ -86,59 +92,24 @@ class _MyAppState extends State<MyApp> {
           },
           onUnknownRoute: (RouteSettings settings) {
             return MaterialPageRoute(
-                builder: (BuildContext context) => NewsPage(_model));
+                builder: (BuildContext context) => NewsPageFasnacht(_model, isNewLayout));
           },
         ),
-      );
+      ),
+    );
+  }
+
+  getThemeData(bool isNewLayout) {
+    if (isNewLayout) {
+      return ThemeData(
+          primarySwatch: Colors.purple,
+          accentColor: Colors.purple,
+          buttonColor: Colors.white);
     } else {
-      return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (_) => FasnachtsDates(),
-          ),
-        ],
-        child:
-            //DateTime.parse(v).isBefore(DateTime.now())
-            ScopedModel<MainModel>(
-          model: _model,
-          child: MaterialApp(
-            theme: ThemeData(
-                primarySwatch: Colors.brown,
-                accentColor: Colors.brown,
-                buttonColor: Colors.white),
-            // home: AuthPage(), //only works wihtout '/' not used
-            routes: {
-              '/': (BuildContext context) => NewsPageFasnacht(_model),
-              '/news': (BuildContext context) => NewsPageFasnacht(_model),
-              '/info': (BuildContext context) => InfoPage(),
-              '/ticker': (BuildContext context) => TickerPage(_model),
-              '/programm': (BuildContext context) => ProgrammPage(),
-              '/auth': (BuildContext context) =>
-                  !_isAuthenticated ? AuthPage() : EventAdminPage(),
-            },
-            onGenerateRoute: (RouteSettings settings) {
-              final List<String> pathElements = settings.name.split('/');
-              if (pathElements[0] != '') {
-                return null;
-              }
-              if (pathElements[1] == 'specific_news') {
-                final String newsId = pathElements[2];
-                final News news = _model.allNews.firstWhere((News news) {
-                  return news.id == newsId;
-                });
-                return MaterialPageRoute<bool>(
-                  builder: (BuildContext context) => SingleNews(news),
-                );
-              }
-              return null;
-            },
-            onUnknownRoute: (RouteSettings settings) {
-              return MaterialPageRoute(
-                  builder: (BuildContext context) => NewsPageFasnacht(_model));
-            },
-          ),
-        ),
-      );
+      return ThemeData(
+          primarySwatch: Colors.brown,
+          accentColor: Colors.brown,
+          buttonColor: Colors.white);
     }
   }
 }
