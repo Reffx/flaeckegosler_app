@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
-import '../../widgets/news/news.dart';
 import '../../scoped-models/main.dart';
 
 class NewsPage extends StatefulWidget {
@@ -26,9 +25,11 @@ class _NewsPageState extends State<NewsPage> {
   Widget _buildNewsList() {
     return ScopedModelDescendant(
         builder: (BuildContext context, Widget child, MainModel model) {
-      Widget content = Center(child: Text('Keine Artikel gefunden, überprüfe deine Internetverbindung!'));
+      Widget content = Center(
+          child: Text(
+              'Keine Artikel gefunden, überprüfe deine Internetverbindung!'));
       if (model.allNews.length > 0 && !model.isLoading) {
-        content = NewsWidget();
+        //content = NewsWidgett();
       } else if (model.isLoading) {
         content = Center(
           child: CircularProgressIndicator(),
@@ -42,7 +43,10 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight,),
+          leading: Image.asset(
+            'assets/goslergrend.png',
+            fit: BoxFit.fitHeight,
+          ),
           //title: Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight),
           actions: <Widget>[
             IconButton(

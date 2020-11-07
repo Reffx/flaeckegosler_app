@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:scoped_model/scoped_model.dart';
-
 import '../../models/news.dart';
-import '../../scoped-models/main.dart';
 
 class NewsCard extends StatelessWidget {
-  final News news;
+  final List<News> news;
+  final News singleNews;
   final int newsIndex;
 
-  NewsCard(this.news, this.newsIndex);
+  NewsCard(this.news, this.singleNews, this.newsIndex);
 
   Widget _buildTitle() {
     return Padding(
       padding: EdgeInsets.only(bottom: 5),
       child: Text(
-        ' ' + news.newsTitle + ' ',
+        ' ' + singleNews.newsTitle + ' ',
         textAlign: TextAlign.start,
         style: TextStyle(
           height: 1.8,
@@ -30,13 +28,14 @@ class NewsCard extends StatelessWidget {
   }
 
   Widget _buildAuthor() {
-    if (news.newsCreatedBy == null || news.newsCreatedBy == 'Administrator') {
+    if (singleNews.newsCreatedBy == null ||
+        singleNews.newsCreatedBy == 'Administrator') {
       return SizedBox(
         height: 10,
       );
     } else
       return Text(
-        'von ' + news.newsCreatedBy,
+        'von ' + singleNews.newsCreatedBy,
         textAlign: TextAlign.start,
         style: TextStyle(
           height: 1.2,
@@ -62,40 +61,38 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<MainModel>(
-        builder: (BuildContext context, Widget child, MainModel model) {
-      return GestureDetector(
-        onTap: () => Navigator.pushNamed<bool>(
-            context, '/specific_news/' + model.allNews[newsIndex].id),
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed<bool>(
+          context, '/specific_news/' + news[newsIndex].id,
+          arguments: news),
+      child: Container(
         child: Container(
-          child: Container(
-            padding: EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                _buildTitle(),
-                _buildAuthor(),
-              ],
+          padding: EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              _buildTitle(),
+              _buildAuthor(),
+            ],
+          ),
+          height: 250,
+          //MediaQuery.of(context).size.heiSght,
+          // width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            border: new Border(
+              left: BorderSide(color: Colors.white, width: 10.0),
+              top: BorderSide(color: Colors.white, width: 10.0),
+              right: BorderSide(color: Colors.white, width: 10.0),
+              bottom: BorderSide(color: Colors.white, width: 0.0),
             ),
-            height: 250,
-            //MediaQuery.of(context).size.heiSght,
-            // width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              border: new Border(
-                left: BorderSide(color: Colors.white, width: 10.0),
-                top: BorderSide(color: Colors.white, width: 10.0),
-                right: BorderSide(color: Colors.white, width: 10.0),
-                bottom: BorderSide(color: Colors.white, width: 0.0),
-              ),
-              //borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
-              image: DecorationImage(
-                  image: NetworkImage(news.imageURL), fit: BoxFit.cover),
-            ),
+            //borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+            image: DecorationImage(
+                image: NetworkImage(singleNews.imageURL), fit: BoxFit.cover),
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 }

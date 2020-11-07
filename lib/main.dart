@@ -57,6 +57,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (_) => FasnachtsDates(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => NewsProvider(),
+        ),
       ],
       child:
           //DateTime.parse(v).isBefore(DateTime.now())
@@ -66,23 +69,25 @@ class _MyAppState extends State<MyApp> {
           theme: myThemeData,
           // home: AuthPage(), //only works wihtout '/' not used
           routes: {
-            '/': (BuildContext context) => NewsPageFasnacht(_model, isNewLayout),
-            '/news': (BuildContext context) => NewsPageFasnacht(_model, isNewLayout),
+            '/': (BuildContext context) => NewsPageFasnacht(isNewLayout),
+            '/news': (BuildContext context) => NewsPageFasnacht(isNewLayout),
             '/info': (BuildContext context) => InfoPage(),
-            '/ticker': (BuildContext context) => TickerPage(_model, isNewLayout),
+            '/ticker': (BuildContext context) =>
+                TickerPage(_model, isNewLayout),
             '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
             '/auth': (BuildContext context) =>
                 !_isAuthenticated ? AuthPage() : EventAdminPage(),
           },
           onGenerateRoute: (RouteSettings settings) {
+            List<News> test = settings.arguments;
             final List<String> pathElements = settings.name.split('/');
             if (pathElements[0] != '') {
               return null;
             }
             if (pathElements[1] == 'specific_news') {
               final String newsId = pathElements[2];
-              final News news = _model.allNews.firstWhere((News news) {
-                return news.id == newsId;
+              final News news = test.firstWhere((News newsss) {
+                return newsss.id == newsId;
               });
               return MaterialPageRoute<bool>(
                 builder: (BuildContext context) => SingleNews(news),
@@ -92,7 +97,8 @@ class _MyAppState extends State<MyApp> {
           },
           onUnknownRoute: (RouteSettings settings) {
             return MaterialPageRoute(
-                builder: (BuildContext context) => NewsPageFasnacht(_model, isNewLayout));
+                builder: (BuildContext context) =>
+                    NewsPageFasnacht(isNewLayout));
           },
         ),
       ),

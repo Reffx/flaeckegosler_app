@@ -1,4 +1,5 @@
 import 'package:Flaeckegosler/models/fasnacht_date.dart';
+import 'package:Flaeckegosler/models/news.dart';
 import 'package:Flaeckegosler/widgets/countdown/countdown.dart';
 import 'package:Flaeckegosler/widgets/ui_elements/madeWithLove.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,8 @@ import 'package:provider/provider.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
-import 'package:scoped_model/scoped_model.dart';
 
-import '../../widgets/news/news.dart';
-import '../../scoped-models/main.dart';
+import '../../widgets/news/newsWidget.dart';
 
 const my_url = 'https://flaeckegosler.ch/admin';
 
@@ -22,9 +21,8 @@ Future launchURL(String url) async {
 }
 
 class NewsPageFasnacht extends StatefulWidget {
-  final MainModel model;
   final bool isNewLayout;
-  NewsPageFasnacht(this.model, this.isNewLayout);
+  NewsPageFasnacht(this.isNewLayout);
   @override
   State<StatefulWidget> createState() {
     return _NewsPageState();
@@ -32,47 +30,80 @@ class NewsPageFasnacht extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPageFasnacht> {
+  var _isLoading = false;
   var _isInit = true;
 
   @override
   initState() {
-    widget.model.fetchProducts();
+    _fetchProducts();
     super.initState();
+  }
+
+  _fetchProducts() {
+    setState(() {
+      _isLoading = true;
+    });
+    Future.delayed(Duration.zero).then((_) async {
+      await Provider.of<NewsProvider>(context, listen: false).fetchProducts();
+      await Provider.of<FasnachtsDates>(context, listen: false).fetchFasnacht();
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
+  Future<Null> test() async {
+    _fetchProducts();
   }
 
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      Provider.of<FasnachtsDates>(context).fetchFasnacht();
+      // Provider.of<NewsProvider>(context).fetchProducts();
+      //Provider.of<FasnachtsDates>(context).fetchFasnacht();
     }
     _isInit = false;
     super.didChangeDependencies();
   }
 
   Widget _buildNewsList(isNewLayout) {
-    return Container(
-      child: ScopedModelDescendant(
-        builder: (BuildContext context, Widget child, MainModel model) {
-          Widget content = Center(
-            child: Text(
-                'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
-          );
-          if (model.allNews.length > 0 && !model.isLoading) {
-            content = ListView(children: <Widget>[
-              Countdown(),
-              NewsWidget(),
-              MadeWithLoveWidget(),
-              _buildVersion(),
-              _getImageBottom(isNewLayout),
-            ]);
-          } else if (model.isLoading) {
-            content = Container(); //if it's loading return empty container
-          }
-          return RefreshIndicator(
-              onRefresh: model.fetchProducts, child: content);
-        },
-      ),
+    Widget content = Center();
+    List<News> _allNews =
+        Provider.of<NewsProvider>(context, listen: false).allNews;
+    if (_allNews.length > 0) {
+      content = ListView(children: <Widget>[
+        Countdown(),
+        NewsWidget(news: _allNews),
+        MadeWithLoveWidget(),
+        _buildVersion(),
+        _getImageBottom(isNewLayout),
+      ]);
+    } else {
+      content = Center(
+        child:
+            Text('Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
+      );
+    }
+    return RefreshIndicator(onRefresh: test, child: content);
+    //
+    /* Widget content = Center(
+      child:
+          Text('Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
     );
+    if (Provider.of<NewsProvider>(context, listen: false).allNews.length > 0) {
+      content = ListView(children: <Widget>[
+        Countdown(),
+        NewsWidget(),
+        MadeWithLoveWidget(),
+        _buildVersion(),
+        _getImageBottom(isNewLayout),
+      ]);
+    } else if (newsProviderVar.isLoading) {
+      content = Container(); //if it's loading return empty container
+    }
+    return RefreshIndicator(
+        onRefresh: newsProviderVar.fetchProducts, child: content); */
+    // return Container();
   }
 
   int _i = 5;
@@ -157,39 +188,83 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     return SafeArea(
       child: Scaffold(
         body: new NestedScrollView(
-          headerSliverBuilder: (context, innerBoxScrolled) => [
-            SliverAppBar(
-              leading:
-                  Image.asset('assets/goslergrend.png', fit: BoxFit.fitHeight),
-              pinned: true,
-              snap: false,
-              floating: false,
-              expandedHeight: 120.0,
-              flexibleSpace: FlexibleSpaceBar(
-                titlePadding: getTitlePadding(widget.isNewLayout),
-                title: getImageTitle(widget.isNewLayout),
-                centerTitle: true,
-                background: getBackgroundImage(widget.isNewLayout),
-              ),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.event),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/ticker');
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/programm');
-                  },
-                ),
-              ],
-            ),
-          ],
-          body: _buildNewsList(widget.isNewLayout),
-        ),
+            headerSliverBuilder: (context, innerBoxScrolled) => [
+                  SliverAppBar(
+                    leading: Image.asset('assets/goslergrend.png',
+                        fit: BoxFit.fitHeight),
+                    pinned: true,
+                    snap: false,
+                    floating: false,
+                    expandedHeight: 120.0,
+                    flexibleSpace: FlexibleSpaceBar(
+                      titlePadding: getTitlePadding(widget.isNewLayout),
+                      title: getImageTitle(widget.isNewLayout),
+                      centerTitle: true,
+                      background: getBackgroundImage(widget.isNewLayout),
+                    ),
+                    actions: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.event),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/ticker');
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.menu),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/programm');
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+            body: _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : _buildNewsList(widget.isNewLayout)),
       ),
     );
   }
 }
+
+/*
+FutureBuilder(
+      future: Provider.of<NewsProvider>(context, listen: false).fetchProducts(),
+      builder: (ctx, dataSnapshot) {
+        if (dataSnapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          if (dataSnapshot != null) {
+            Center(
+              child: Text(
+                  'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
+            );
+          } else {
+            return Consumer<NewsProvider>(
+              builder: (ctx, newsProviderData, child) {
+                return ListView(children: <Widget>[
+                  Countdown(),
+                  NewsWidget(news: newsProviderData.allNews),
+                  MadeWithLoveWidget(),
+                  _buildVersion(),
+                  _getImageBottom(isNewLayout),
+                ]);
+              },
+            );
+          }
+        }
+        return Consumer<NewsProvider>(
+          builder: (ctx, newsProviderData, child) {
+            return ListView(children: <Widget>[
+              Countdown(),
+              NewsWidget(news: newsProviderData.allNews),
+              MadeWithLoveWidget(),
+              _buildVersion(),
+              _getImageBottom(isNewLayout),
+            ]);
+          },
+        );
+      },
+    );
+ */
