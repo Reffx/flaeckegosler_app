@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rxdart/subjects.dart';
 
-import '../models/news.dart';
 import '../models/user.dart';
 import '../models/auth.dart';
 import '../models/event.dart';
@@ -14,8 +13,6 @@ import '../models/event.dart';
 mixin ConnectedNewsModel on Model {
   List<Event> _events = [];
   String _selEventId;
-  List<News> _news = [];
-  String _selNewsId;
   User _authenticatedUser;
   bool _isLoading = false;
 }
@@ -151,7 +148,6 @@ mixin EventModel on ConnectedNewsModel {
       _events = fetchtedEventList;
       _isLoading = false;
       notifyListeners();
-      _selNewsId = null;
     }).catchError((error) {
       return _events;
     });
@@ -159,75 +155,6 @@ mixin EventModel on ConnectedNewsModel {
 
   void selectEvent(String eventId) {
     _selEventId = eventId;
-    notifyListeners();
-  }
-}
-
-mixin NewsModel on ConnectedNewsModel {
-  List<News> get allNews {
-    return List.from(_news);
-  }
-
-
-  int get selectedNewsIndex {
-    return _news.indexWhere((News news) {
-      return news.id == _selNewsId;
-    });
-  }
-
-  String get selectedNewsId {
-    return _selNewsId;
-  }
-
-  News get selectedNews {
-    if (selectedNewsId == null) {
-      return null;
-    }
-    return _news.firstWhere((News news) {
-      return news.id == _selNewsId;
-    });
-  }
-
-  Future<bool> fetchProducts() {
-    _isLoading = true;
-    notifyListeners();
-    return http
-        .get('https://flaeckegosler.ch/app/news-to-json/')
-        .then<Null>((http.Response response) {
-      final List<News> fetchedProductList = [];
-      final Map<String, dynamic> productListData = json.decode(response.body);
-      if (productListData == null) {
-        _isLoading = false;
-        notifyListeners();
-        return;
-      }
-      productListData.forEach((String productId, dynamic newsData) {
-        final News news = News(
-            id: productId.toString(),
-            newsTitle: newsData['newsTitle'],
-            imageURL: newsData['imageURL'],
-            cropImageURL: newsData['cropImageURL'],
-            timeCreatedUnix: newsData['timeCreatedUnix'],
-            timeCreatedFormatted: newsData['timeCreatedFormatted'],
-            newsCreatedBy: newsData['newsCreatedBy'],
-            newsIntroText: newsData['newsIntroText'],
-            newsMainText: newsData['newsMainText'],
-            imageDescription: newsData['imageDescription']);
-        fetchedProductList.add(news);
-      });
-      _news = fetchedProductList;
-      _isLoading = false;
-      notifyListeners();
-      _selNewsId = null;
-    }).catchError((error) {
-      _isLoading = false;
-      notifyListeners();
-      return;
-    });
-  }
-
-  void selectNews(String newsId) {
-    _selNewsId = newsId;
     notifyListeners();
   }
 }

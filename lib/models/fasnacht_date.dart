@@ -7,11 +7,11 @@ class FasnachtsDate with ChangeNotifier {
   final String start;
   final String end;
 
- FasnachtsDate( 
-      {@required this.id,
-      @required this.start,
-      @required this.end,
-      });
+  FasnachtsDate({
+    @required this.id,
+    @required this.start,
+    @required this.end,
+  });
 }
 
 class FasnachtsDates with ChangeNotifier {
@@ -20,7 +20,7 @@ class FasnachtsDates with ChangeNotifier {
   List<FasnachtsDate> get fasnachtsDates {
     return [..._fasnachtsDates];
   }
-  
+
   String get fasnachtDateStart {
     return _fasnachtsDates.first.start;
   }
@@ -33,7 +33,7 @@ class FasnachtsDates with ChangeNotifier {
     const url =
         'https://flutter-products-6da30.firebaseio.com/fasnachtDate.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(url).timeout(Duration(seconds: 6));
       final List<FasnachtsDate> fetchedFasnachtsDate = [];
       final Map<String, dynamic> dateListData = json.decode(response.body);
       dateListData.forEach((String dateId, dynamic dateData) {
@@ -47,7 +47,7 @@ class FasnachtsDates with ChangeNotifier {
       _fasnachtsDates = fetchedFasnachtsDate;
       notifyListeners();
     } catch (error) {
-      throw (error);
+      return;
     }
   }
 }

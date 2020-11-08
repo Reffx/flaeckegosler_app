@@ -45,7 +45,12 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     });
     Future.delayed(Duration.zero).then((_) async {
       await Provider.of<NewsProvider>(context, listen: false).fetchProducts();
-      await Provider.of<FasnachtsDates>(context, listen: false).fetchFasnacht();
+      if (Provider.of<NewsProvider>(context, listen: false)
+          .allNews
+          .isNotEmpty) {
+        await Provider.of<FasnachtsDates>(context, listen: false)
+            .fetchFasnacht();
+      }
       setState(() {
         _isLoading = false;
       });
@@ -79,31 +84,17 @@ class _NewsPageState extends State<NewsPageFasnacht> {
         _getImageBottom(isNewLayout),
       ]);
     } else {
-      content = Center(
-        child:
-            Text('Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
-      );
+      content = ListView(children: <Widget>[
+        Center(
+          child: Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Text(
+                'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
+          ),
+        ),
+      ]);
     }
     return RefreshIndicator(onRefresh: test, child: content);
-    //
-    /* Widget content = Center(
-      child:
-          Text('Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
-    );
-    if (Provider.of<NewsProvider>(context, listen: false).allNews.length > 0) {
-      content = ListView(children: <Widget>[
-        Countdown(),
-        NewsWidget(),
-        MadeWithLoveWidget(),
-        _buildVersion(),
-        _getImageBottom(isNewLayout),
-      ]);
-    } else if (newsProviderVar.isLoading) {
-      content = Container(); //if it's loading return empty container
-    }
-    return RefreshIndicator(
-        onRefresh: newsProviderVar.fetchProducts, child: content); */
-    // return Container();
   }
 
   int _i = 5;

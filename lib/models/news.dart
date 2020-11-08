@@ -58,6 +58,7 @@ class NewsProvider with ChangeNotifier {
   Future<bool> fetchProducts() {
     return http
         .get('https://flaeckegosler.ch/app/news-to-json/')
+        .timeout(Duration(seconds: 6))
         .then<Null>((http.Response response) {
       final List<News> fetchedProductList = [];
       final Map<String, dynamic> productListData = json.decode(response.body);

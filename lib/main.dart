@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:scoped_model/scoped_model.dart';
 import './scoped-models/main.dart';
 
-import './pages/news/news.dart';
 import './pages/news/newsFasnacht.dart';
 import './pages/auth.dart';
 import './pages/info.dart';
