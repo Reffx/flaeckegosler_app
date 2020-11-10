@@ -45,12 +45,12 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     });
     Future.delayed(Duration.zero).then((_) async {
       await Provider.of<NewsProvider>(context, listen: false).fetchProducts();
-      if (Provider.of<NewsProvider>(context, listen: false)
+      /* if (Provider.of<NewsProvider>(context, listen: false)
           .allNews
           .isNotEmpty) {
         await Provider.of<FasnachtsDates>(context, listen: false)
-            .fetchFasnacht();
-      }
+            .fetchFasnacht();  
+        } */
       setState(() {
         _isLoading = false;
       });
@@ -65,7 +65,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
   void didChangeDependencies() {
     if (_isInit) {
       // Provider.of<NewsProvider>(context).fetchProducts();
-      //Provider.of<FasnachtsDates>(context).fetchFasnacht();
+      Provider.of<FasnachtsDates>(context).fetchFasnacht();
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -218,44 +218,3 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     );
   }
 }
-
-/*
-FutureBuilder(
-      future: Provider.of<NewsProvider>(context, listen: false).fetchProducts(),
-      builder: (ctx, dataSnapshot) {
-        if (dataSnapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else {
-          if (dataSnapshot != null) {
-            Center(
-              child: Text(
-                  'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
-            );
-          } else {
-            return Consumer<NewsProvider>(
-              builder: (ctx, newsProviderData, child) {
-                return ListView(children: <Widget>[
-                  Countdown(),
-                  NewsWidget(news: newsProviderData.allNews),
-                  MadeWithLoveWidget(),
-                  _buildVersion(),
-                  _getImageBottom(isNewLayout),
-                ]);
-              },
-            );
-          }
-        }
-        return Consumer<NewsProvider>(
-          builder: (ctx, newsProviderData, child) {
-            return ListView(children: <Widget>[
-              Countdown(),
-              NewsWidget(news: newsProviderData.allNews),
-              MadeWithLoveWidget(),
-              _buildVersion(),
-              _getImageBottom(isNewLayout),
-            ]);
-          },
-        );
-      },
-    );
- */
