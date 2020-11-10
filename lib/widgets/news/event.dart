@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:scoped_model/scoped_model.dart';
+import 'package:provider/provider.dart';
 
 import './event_card.dart';
 import '../../models/event.dart';
-import '../../scoped-models/main.dart';
 
 class EventWidget extends StatelessWidget {
   Widget _buildEventList(List<Event> event) {
@@ -27,10 +26,7 @@ class EventWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<MainModel>(
-      builder: (BuildContext context, Widget child, MainModel model) {
-        return _buildEventList(model.allEvents);
-      },
-    );
+    return _buildEventList(
+        Provider.of<EventProvider>(context, listen: false).allEvents);
   }
 }

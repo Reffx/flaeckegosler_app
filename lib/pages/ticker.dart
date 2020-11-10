@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:scoped_model/scoped_model.dart';
+import 'package:provider/provider.dart';
+import 'package:Flaeckegosler/models/event.dart';
 
 import './../widgets/news/event.dart';
-import './../scoped-models/main.dart';
 
 class TickerPage extends StatefulWidget {
-  final MainModel model;
   final bool isNewLayout;
-  TickerPage(this.model, this.isNewLayout);
+  TickerPage(this.isNewLayout);
 
   @override
   State<StatefulWidget> createState() {
@@ -36,28 +35,29 @@ DecorationImage _buildBackgroundImage(bool isNewLayout) {
   }
 }
 
-Widget _buildTickerList() {
-  return ScopedModelDescendant(
-      builder: (BuildContext context, Widget child, MainModel model) {
-    Widget content = Center(
+Widget _buildTickerList(context, _isLoading) {
+  var _eventProvider = Provider.of<EventProvider>(context, listen: false);
+  Widget content;
+  if (_isLoading) {
+    content = Column(
+      children: <Widget>[
+        SizedBox(height: 50),
+        CircularProgressIndicator(),
+        SizedBox(height: 800)
+      ],
+    );
+  }
+  if (_eventProvider.allEvents.length > 0 && !_isLoading) {
+    content = EventWidget();
+  } else if (!_isLoading) {
+    content = Center(
       child: Text(
         'Zur Zeit wird kein Live-Ticker geführt!',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
     );
-    if (model.allEvents.length > 0 && !model.isLoading) {
-      content = EventWidget();
-    } else if (model.isLoading) {
-      content = Column(
-        children: <Widget>[
-          SizedBox(height: 50),
-          CircularProgressIndicator(),
-          SizedBox(height: 800)
-        ],
-      );
-    }
-    return RefreshIndicator(onRefresh: model.fetchEvents, child: content);
-  });
+  }
+  return content;
 }
 
 Widget _buildTitelTicker() {
@@ -79,10 +79,28 @@ Widget _buildTitelTicker() {
 }
 
 class _TickerStatePage extends State<TickerPage> {
+  var _isLoading = false;
+
   @override
   initState() {
-    widget.model.fetchEvents();
+    _fetchEvents();
     super.initState();
+  }
+
+  _fetchEvents() {
+    setState(() {
+      _isLoading = true;
+    });
+    Future.delayed(Duration.zero).then((_) async {
+      await Provider.of<EventProvider>(context, listen: false).fetchEvents();
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
+  Future<Null> test() async {
+    _fetchEvents();
   }
 
   @override
@@ -99,42 +117,45 @@ class _TickerStatePage extends State<TickerPage> {
           decoration: BoxDecoration(
             image: _buildBackgroundImage(widget.isNewLayout),
           ),
-          child: new CustomScrollView(slivers: <Widget>[
-            SliverList(
-                delegate: new SliverChildListDelegate([
-              Column(
-                children: <Widget>[
-                  _buildTitelTicker(),
-                  _buildTickerList(),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 20, top: 20),
-                    child: Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          _k = _k - 1;
-                          print(_k);
-                          if (_k == 0) {
-                            Navigator.pushNamed(context, '/auth');
-                            _k = 5;
-                          }
-                        },
-                        child: Text(
-                          'Made with ♥ in Rothenburg',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Oswald',
-                            color: Colors.black,
+          child: RefreshIndicator(
+            onRefresh: test,
+            child: new CustomScrollView(slivers: <Widget>[
+              SliverList(
+                  delegate: new SliverChildListDelegate([
+                Column(
+                  children: <Widget>[
+                    _buildTitelTicker(),
+                    _buildTickerList(context, _isLoading),
+                    Container(
+                      padding: EdgeInsets.only(bottom: 20, top: 20),
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            _k = _k - 1;
+                            print(_k);
+                            if (_k == 0) {
+                              Navigator.pushNamed(context, '/auth');
+                              _k = 5;
+                            }
+                          },
+                          child: Text(
+                            'Made with ♥ in Rothenburg',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Oswald',
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ])),
-          ]),
+                  ],
+                )
+              ])),
+            ]),
+          ),
         ),
       ),
     );

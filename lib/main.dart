@@ -15,6 +15,7 @@ import './pages/event_admin.dart';
 import './pages/single_news.dart';
 
 import './models/news.dart';
+import './models/event.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -59,6 +60,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (_) => NewsProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => EventProvider(),
+        ),
       ],
       child:
           //DateTime.parse(v).isBefore(DateTime.now())
@@ -71,11 +75,10 @@ class _MyAppState extends State<MyApp> {
             '/': (BuildContext context) => NewsPageFasnacht(isNewLayout),
             '/news': (BuildContext context) => NewsPageFasnacht(isNewLayout),
             '/info': (BuildContext context) => InfoPage(),
-            '/ticker': (BuildContext context) =>
-                TickerPage(_model, isNewLayout),
+            '/ticker': (BuildContext context) => TickerPage(isNewLayout),
             '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
-            '/auth': (BuildContext context) =>
-                !_isAuthenticated ? AuthPage() : EventAdminPage(),
+            // '/auth': (BuildContext context) =>
+            //   !_isAuthenticated ? AuthPage() : EventAdminPage(),
           },
           onGenerateRoute: (RouteSettings settings) {
             List<News> test = settings.arguments;

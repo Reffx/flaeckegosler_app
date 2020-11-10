@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 import '../scoped-models/main.dart';
@@ -45,7 +45,8 @@ class _EventAdminStatePage extends State<EventAdminPage> {
     if (picked != null && picked != selectedPredictedPlayTimeDate) {
       setState(() {
         selectedPredictedPlayTimeDate = picked;
-        _formData['predictedPlayTime'] = selectedPredictedPlayTimeDate.toString();
+        _formData['predictedPlayTime'] =
+            selectedPredictedPlayTimeDate.toString();
       });
     }
   }
@@ -83,8 +84,8 @@ class _EventAdminStatePage extends State<EventAdminPage> {
   }
 
   Future<Null> _selectPredictedPlayTime(BuildContext context) async {
-    final TimeOfDay picked =
-        await showTimePicker(context: context, initialTime: _predictedPlayTimeHour);
+    final TimeOfDay picked = await showTimePicker(
+        context: context, initialTime: _predictedPlayTimeHour);
     if (picked != null && picked != selectedPredictedPlayTimeHour) {
       setState(() {
         selectedPredictedPlayTimeHour = picked;
@@ -173,7 +174,7 @@ class _EventAdminStatePage extends State<EventAdminPage> {
     );
   }
 
-  Widget _buildSubmitButton() {
+  /* Widget _buildSubmitButton() {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
         return model.isLoading
@@ -188,7 +189,7 @@ class _EventAdminStatePage extends State<EventAdminPage> {
               );
       },
     );
-  }
+  } */
 
   void _submitForm(
       Function addEvent, Function updateEvent, Function setSelectedEvent,
@@ -256,7 +257,7 @@ class _EventAdminStatePage extends State<EventAdminPage> {
               SizedBox(
                 height: 10.0,
               ),
-              _buildSubmitButton(),
+              // _buildSubmitButton(),
               Container(
                 child: LogoutWidget(),
               )
@@ -267,7 +268,7 @@ class _EventAdminStatePage extends State<EventAdminPage> {
     );
   }
 
-  @override
+/*  @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant<MainModel>(
       builder: (BuildContext context, Widget child, MainModel model) {
@@ -286,4 +287,5 @@ class _EventAdminStatePage extends State<EventAdminPage> {
       },
     );
   }
-}
+}*/
+*/
