@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rxdart/subjects.dart';
 
 import '../models/user.dart';
-import '../models/auth.dart';
 
 mixin ConnectedNewsModel on Model {
   User _authenticatedUser;
@@ -26,7 +25,7 @@ mixin UserModel on ConnectedNewsModel, Model {
     return _userSubject;
   }
 
-  Future<Map<String, dynamic>> authenticate(String email, String password,
+  /*Future<Map<String, dynamic>> authenticate(String email, String password,
       [AuthMode mode = AuthMode.Login]) async {
     _isLoading = true;
     notifyListeners();
@@ -48,9 +47,9 @@ mixin UserModel on ConnectedNewsModel, Model {
         body: json.encode(authData),
         headers: {'Content-Type': 'application/json'},
       );
-    }
+    } */
 
-    final Map<String, dynamic> responseData = json.decode(response.body);
+  /*  final Map<String, dynamic> responseData = json.decode(response.body);
     bool hasError = true;
     String message = 'Uuups, something went wrong!';
     if (responseData.containsKey('idToken')) {
@@ -80,7 +79,7 @@ mixin UserModel on ConnectedNewsModel, Model {
     _isLoading = false;
     notifyListeners();
     return {'success': !hasError, 'message': message};
-  }
+  } */
 
   void autoAuthenticate() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

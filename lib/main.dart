@@ -7,12 +7,14 @@ import 'package:scoped_model/scoped_model.dart';
 import './scoped-models/main.dart';
 
 import './pages/news/newsFasnacht.dart';
-import './pages/auth.dart';
+import 'pages/authScreen.dart';
 import './pages/info.dart';
 import './pages/programm.dart';
 import './pages/ticker.dart';
 import './pages/event_admin.dart';
 import './pages/single_news.dart';
+
+import './provider/auth.dart';
 
 import './models/news.dart';
 import './models/event.dart';
@@ -54,6 +56,9 @@ class _MyAppState extends State<MyApp> {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
         ChangeNotifierProvider(
           create: (_) => FasnachtsDates(),
         ),
@@ -77,8 +82,8 @@ class _MyAppState extends State<MyApp> {
             '/info': (BuildContext context) => InfoPage(),
             '/ticker': (BuildContext context) => TickerPage(isNewLayout),
             '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
-            // '/auth': (BuildContext context) =>
-            //   !_isAuthenticated ? AuthPage() : EventAdminPage(),
+            '/auth': (BuildContext context) =>
+                !_isAuthenticated ? AuthScreen() : AuthScreen(),
           },
           onGenerateRoute: (RouteSettings settings) {
             List<News> test = settings.arguments;
