@@ -13,19 +13,22 @@ class News with ChangeNotifier {
   final String newsIntroText;
   final String newsMainText;
   final String imageDescription;
+  final String newsTags;
+  final String galleryLink;
 
-  News({
-    @required this.id,
-    @required this.newsTitle,
-    @required this.imageURL,
-    @required this.cropImageURL,
-    @required this.timeCreatedUnix,
-    @required this.timeCreatedFormatted,
-    this.newsCreatedBy,
-    @required this.newsIntroText,
-    @required this.newsMainText,
-    this.imageDescription,
-  });
+  News(
+      {@required this.id,
+      @required this.newsTitle,
+      @required this.imageURL,
+      @required this.cropImageURL,
+      @required this.timeCreatedUnix,
+      @required this.timeCreatedFormatted,
+      this.newsCreatedBy,
+      @required this.newsIntroText,
+      @required this.newsMainText,
+      this.imageDescription,
+      this.newsTags,
+      this.galleryLink});
 }
 
 class NewsProvider with ChangeNotifier {
@@ -76,7 +79,9 @@ class NewsProvider with ChangeNotifier {
             newsCreatedBy: newsData['newsCreatedBy'],
             newsIntroText: newsData['newsIntroText'],
             newsMainText: newsData['newsMainText'],
-            imageDescription: newsData['imageDescription']);
+            imageDescription: newsData['imageDescription'],
+            newsTags: newsData['newsTags'],
+            galleryLink: newsData['galleryLink']);
         fetchedProductList.add(news);
       });
       _news = fetchedProductList;

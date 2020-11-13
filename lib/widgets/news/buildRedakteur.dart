@@ -29,3 +29,39 @@ Widget buildRedakteur(newsCreatedBy) {
   } else
     return SizedBox();
 }
+
+Widget buildRedakteurNewsList(newsCreatedBy) {
+  if (Authors.getRedakteur(newsCreatedBy) != null) {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6,
+                    color: Colors.black,
+                    offset: Offset(2.0, 2.0),
+                  )
+                ],
+              ),
+              child: CircleAvatar(
+                radius: 35,
+                backgroundImage: AssetImage(
+                  Authors.getRedakteur(newsCreatedBy),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 10.0, left: 0, right: 0),
+        ),
+      ],
+    );
+  } else
+    return SizedBox();
+}
