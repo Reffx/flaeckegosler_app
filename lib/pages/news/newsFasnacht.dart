@@ -37,6 +37,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
   bool _show = true; //needed for handling the show of the FabCircularMenu
   ScrollController _scrollController =
       new ScrollController(); //needed for handling the show of the FabCircularMenu
+  ScrollController _scrollController2 = new ScrollController();
 
   @override
   initState() {
@@ -51,6 +52,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     });
     Future.delayed(Duration.zero).then((_) async {
       await Provider.of<NewsProvider>(context, listen: false).fetchProducts();
+      await Provider.of<FasnachtsDates>(context, listen: false).fetchFasnacht();
       /* if (Provider.of<NewsProvider>(context, listen: false)
           .allNews
           .isNotEmpty) {
@@ -85,29 +87,42 @@ class _NewsPageState extends State<NewsPageFasnacht> {
   }
 
   Widget _buildNewsList(isNewLayout) {
-    Widget content = Center();
     List<News> _allNews =
         Provider.of<NewsProvider>(context, listen: false).allNews;
     if (_allNews.length > 0) {
-      content = ListView(controller: _scrollController, children: <Widget>[
-        Countdown(),
-        NewsWidget(news: _allNews),
-        MadeWithLoveWidget(),
-        _buildVersion(),
-        _getImageBottom(isNewLayout),
-      ]);
+      return ListView(
+        shrinkWrap: true,
+        controller: _scrollController2,
+        children: <Widget>[
+          Countdown(),
+          NewsWidget(news: _allNews),
+          MadeWithLoveWidget(),
+          _buildVersion(),
+          _getImageBottom(isNewLayout),
+        ],
+      );
     } else {
-      content = ListView(controller: _scrollController, children: <Widget>[
-        Center(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Text(
-                'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
+      return ListView(
+        shrinkWrap: true,
+        controller: _scrollController2,
+        children: <Widget>[
+          Container(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Text(
+                    'Keine Artikel gefunden! Überprüfe deine Internetverbindung!'),
+              ),
+            ),
           ),
-        ),
-      ]);
+          Container(
+            child: Padding(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height),
+            ),
+          )
+        ],
+      );
     }
-    return RefreshIndicator(onRefresh: test, child: content);
   }
 
   int _i = 5;
@@ -236,7 +251,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
                 RawMaterialButton(
                   shape: CircleBorder(),
                   child: Icon(
-                    Icons.event,
+                    Icons.watch_later_outlined,
                     color: Colors.white,
                   ),
                   onPressed: () {
@@ -246,7 +261,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
                 RawMaterialButton(
                   shape: CircleBorder(),
                   child: Icon(
-                    Icons.menu,
+                    Icons.event,
                     color: Colors.white,
                   ),
                   onPressed: () {
@@ -257,42 +272,56 @@ class _NewsPageState extends State<NewsPageFasnacht> {
             ),
           ),
         ),
-        body: new NestedScrollView(
-            headerSliverBuilder: (context, innerBoxScrolled) => [
-                  SliverAppBar(
-                    leading: Image.asset('assets/goslergrend.png',
-                        fit: BoxFit.fitHeight),
-                    pinned: true,
-                    snap: false,
-                    floating: false,
-                    expandedHeight: 120.0,
-                    flexibleSpace: FlexibleSpaceBar(
-                      titlePadding: getTitlePadding(widget.isNewLayout),
-                      title: getImageTitle(widget.isNewLayout),
-                      centerTitle: true,
-                      background: getBackgroundImage(widget.isNewLayout),
-                    ),
-                    actions: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.event),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/ticker');
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.menu),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/programm');
-                        },
-                      ),
-                    ],
+        body: RefreshIndicator(
+          displacement: 80,
+          onRefresh: test,
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: <Widget>[
+              SliverAppBar(
+                leading: Image.asset('assets/goslergrend.png',
+                    fit: BoxFit.fitHeight),
+                pinned: true,
+                snap: false,
+                floating: false,
+                expandedHeight: 120.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  titlePadding: getTitlePadding(widget.isNewLayout),
+                  title: getImageTitle(widget.isNewLayout),
+                  centerTitle: true,
+                  background: getBackgroundImage(widget.isNewLayout),
+                ),
+                /* actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.event),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/ticker');
+                    },
                   ),
-                ],
-            body: _isLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : _buildNewsList(widget.isNewLayout)),
+                  IconButton(
+                    icon: Icon(Icons.view_week),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/programm');
+                    },
+                  ),
+                ],*/
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    _isLoading
+                        ? Center(
+                            child: Container(
+                            padding: EdgeInsets.only(top: 200.0),
+                            child: CircularProgressIndicator(),
+                          ))
+                        : _buildNewsList(widget.isNewLayout),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
