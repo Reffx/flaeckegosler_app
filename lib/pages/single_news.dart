@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:Flaeckegosler/widgets/news/buildRedakteur.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/ui_elements/title_default.dart';
 import '../models/news.dart';
+import '../models/Authors.dart';
 
 import 'package:flutter_html/flutter_html.dart';
 
@@ -22,88 +24,6 @@ class SingleNews extends StatelessWidget {
   final News single_news;
 
   SingleNews(this.single_news);
-
-  String getRedakteur() {
-    if (single_news.newsCreatedBy == "Administrator") {
-      return null;
-    } else if (single_news.newsCreatedBy == "Carmen Andermatt") {
-      return 'assets/redakteure/carmen.png';
-    } else if (single_news.newsCreatedBy == "Damian Zurmühle") {
-      return 'assets/redakteure/damian.png';
-    } else if (single_news.newsCreatedBy == "Daniela Hotz") {
-      return 'assets/redakteure/danielah.png';
-    } else if (single_news.newsCreatedBy == "Dario Köchli") {
-      return 'assets/redakteure/dariok.png';
-    } else if (single_news.newsCreatedBy == "Dario Stocker") {
-      return 'assets/redakteure/darios.png';
-    } else if (single_news.newsCreatedBy == "Diego Zimmermann") {
-      return 'assets/redakteure/diego.png';
-    } else if (single_news.newsCreatedBy == "Dominic Mauron") {
-      return 'assets/redakteure/dominicm.png';
-    } else if (single_news.newsCreatedBy == "Fabian Koch") {
-      return 'assets/redakteure/fabiank.png';
-    } else if (single_news.newsCreatedBy == "Fabio Roos") {
-      return 'assets/redakteure/fabio.png';
-    } else if (single_news.newsCreatedBy == "Janick Lang") {
-      return 'assets/redakteure/janick.png';
-    } else if (single_news.newsCreatedBy == "José Stählin") {
-      return 'assets/redakteure/jose.png';
-    } else if (single_news.newsCreatedBy == "Justin Faesi") {
-      return 'assets/redakteure/justin.png';
-    } else if (single_news.newsCreatedBy == "Lukas Studer") {
-      return 'assets/redakteure/lukasStuder.png';
-    } else if (single_news.newsCreatedBy == "Manuel Mühlebach") {
-      return 'assets/redakteure/manuelm.png';
-    } else if (single_news.newsCreatedBy == "Martin Richli") {
-      return 'assets/redakteure/martin.png';
-    } else if (single_news.newsCreatedBy == "Michèle Kritzer") {
-      return 'assets/redakteure/michelek.png';
-    } else if (single_news.newsCreatedBy == "Noah Berwert") {
-      return 'assets/redakteure/noah.png';
-    } else if (single_news.newsCreatedBy == "Oliver Schürch") {
-      return 'assets/redakteure/olivers.png';
-    } else if (single_news.newsCreatedBy == "Patrick Vogel") {
-      return 'assets/redakteure/patrickv.png';
-    } else if (single_news.newsCreatedBy == "Philippe Schenker") {
-      return 'assets/redakteure/phil.png';
-    } else if (single_news.newsCreatedBy == "Raphael Koch") {
-      return 'assets/redakteure/raphikoch.png';
-    } else if (single_news.newsCreatedBy == "Reto Bättig") {
-      return 'assets/redakteure/reto.png';
-    } else if (single_news.newsCreatedBy == "Stefan Lang") {
-      return 'assets/redakteure/stefan.png';
-    } else
-      return null;
-  }
-
-  Widget _buildRedakteur() {
-    if (getRedakteur() != null) {
-      return Column(
-        children: <Widget>[
-          Padding(
-              padding:
-                  EdgeInsets.only(top: 10.0, left: 20, right: 20, bottom: 10),
-              child: Divider()),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              CircleAvatar(
-                radius: 35,
-                backgroundImage: AssetImage(
-                  getRedakteur(),
-                ),
-              ),
-              Text("   von " + single_news.newsCreatedBy),
-            ],
-          ),
-          Padding(
-              padding: EdgeInsets.only(top: 10.0, left: 20, right: 20),
-              child: Divider()),
-        ],
-      );
-    } else
-      return SizedBox();
-  }
 
   Widget _buildTitelBild() {
     return Container(
@@ -166,7 +86,7 @@ class SingleNews extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          /* actions: <Widget>[
+            /* actions: <Widget>[
             IconButton(
               icon: Icon(Icons.menu),
               onPressed: () {
@@ -174,7 +94,7 @@ class SingleNews extends StatelessWidget {
               },
             )
           ], */
-        ),
+            ),
         body: ListView(
           //  crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -201,7 +121,7 @@ class SingleNews extends StatelessWidget {
                 data: "<b>" + single_news.newsIntroText + "</b>",
               ),
             ),
-            _buildRedakteur(),
+            buildRedakteur(single_news.newsCreatedBy),
             _buildMainText(),
           ],
         ),
