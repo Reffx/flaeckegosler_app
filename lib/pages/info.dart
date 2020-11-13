@@ -49,7 +49,7 @@ class _InfoPageState extends State<InfoPage> {
                       }
                     },
                     child: Text(
-                      ' Version 1.3.0 ',
+                      ' Version 1.3.1 ',
                       style: TextStyle(
                         fontSize: 22.0,
                         fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class _InfoPageState extends State<InfoPage> {
                       _k = _k - 1;
                       print(_k);
                       if (_k == 0) {
-                          Navigator.pushNamed(context, '/auth');
+                        Navigator.pushNamed(context, '/auth');
                         _k = 5;
                       }
                     },
