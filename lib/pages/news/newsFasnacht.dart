@@ -2,7 +2,9 @@ import 'package:Flaeckegosler/models/fasnacht_date.dart';
 import 'package:Flaeckegosler/models/news.dart';
 import 'package:Flaeckegosler/widgets/countdown/countdown.dart';
 import 'package:Flaeckegosler/widgets/ui_elements/madeWithLove.dart';
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -32,11 +34,15 @@ class NewsPageFasnacht extends StatefulWidget {
 class _NewsPageState extends State<NewsPageFasnacht> {
   var _isLoading = false;
   var _isInit = true;
+  bool _show = true; //needed for handling the show of the FabCircularMenu
+  ScrollController _scrollController =
+      new ScrollController(); //needed for handling the show of the FabCircularMenu
 
   @override
   initState() {
     _fetchProducts();
     super.initState();
+    handleScroll(); //needed for handling the show of the FabCircularMenu
   }
 
   _fetchProducts() {
@@ -71,12 +77,19 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     super.didChangeDependencies();
   }
 
+  //needed for handling the show of the FabCircularMenu
+  @override
+  void dispose() {
+    _scrollController.removeListener(() {});
+    super.dispose();
+  }
+
   Widget _buildNewsList(isNewLayout) {
     Widget content = Center();
     List<News> _allNews =
         Provider.of<NewsProvider>(context, listen: false).allNews;
     if (_allNews.length > 0) {
-      content = ListView(children: <Widget>[
+      content = ListView(controller: _scrollController, children: <Widget>[
         Countdown(),
         NewsWidget(news: _allNews),
         MadeWithLoveWidget(),
@@ -84,7 +97,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
         _getImageBottom(isNewLayout),
       ]);
     } else {
-      content = ListView(children: <Widget>[
+      content = ListView(controller: _scrollController, children: <Widget>[
         Center(
           child: Padding(
             padding: EdgeInsets.only(top: 20),
@@ -174,10 +187,76 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     }
   }
 
+  void showFloationButton() {
+    setState(() {
+      _show = true;
+    });
+  } //needed for handling the show of the FabCircularMenu
+
+  void hideFloationButton() {
+    setState(() {
+      _show = false;
+    });
+  } //needed for handling the show of the FabCircularMenu
+
+  void handleScroll() async {
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        hideFloationButton();
+      }
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        showFloationButton();
+      }
+    });
+  } //needed for handling the show of the FabCircularMenu
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: AnimatedOpacity(
+          // If the widget is visible, animate to 0.0 (invisible).
+          // If the widget is hidden, animate to 1.0 (fully visible).
+          opacity: _show ? 1.0 : 0.0,
+          duration: Duration(milliseconds: 500),
+          child: Visibility(
+            visible: _show,
+            child: FabCircularMenu(
+              fabColor: Theme.of(context).primaryColor,
+              fabOpenIcon: Icon(Icons.menu, color: Colors.white),
+              fabCloseIcon: Icon(Icons.close, color: Colors.white),
+              fabMargin: EdgeInsets.all(16.0),
+              alignment: Alignment.bottomLeft,
+              ringWidth: 50,
+              ringDiameter: 300,
+              ringColor: Theme.of(context).primaryColor,
+              children: <Widget>[
+                RawMaterialButton(
+                  shape: CircleBorder(),
+                  child: Icon(
+                    Icons.event,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/ticker');
+                  },
+                ),
+                RawMaterialButton(
+                  shape: CircleBorder(),
+                  child: Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/programm');
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
         body: new NestedScrollView(
             headerSliverBuilder: (context, innerBoxScrolled) => [
                   SliverAppBar(
