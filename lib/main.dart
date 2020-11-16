@@ -1,4 +1,5 @@
 import 'package:Flaeckegosler/models/fasnacht_date.dart';
+import 'package:Flaeckegosler/provider/newsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: Auth(),
+          value: AuthProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => FasnachtsDates(),

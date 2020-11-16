@@ -6,6 +6,7 @@ import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
+import '../../provider/newsProvider.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
