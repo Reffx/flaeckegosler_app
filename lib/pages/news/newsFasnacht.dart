@@ -1,17 +1,16 @@
-import 'package:Flaeckegosler/models/fasnacht_date.dart';
-import 'package:Flaeckegosler/models/news.dart';
-import 'package:Flaeckegosler/widgets/countdown/countdown.dart';
-import 'package:Flaeckegosler/widgets/ui_elements/madeWithLove.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
-import '../../provider/newsProvider.dart';
-
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 
+import '../../models/news.dart';
+import '../../widgets/countdown/countdown.dart';
+import '../../widgets/ui_elements/madeWithLove.dart';
 import '../../widgets/news/newsWidget.dart';
+import '../../provider/newsProvider.dart';
+import '../../provider/fasnachtsDatesProvider.dart';
 
 const my_url = 'https://flaeckegosler.ch/admin';
 
@@ -53,7 +52,8 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     });
     Future.delayed(Duration.zero).then((_) async {
       await Provider.of<NewsProvider>(context, listen: false).fetchProducts();
-      await Provider.of<FasnachtsDates>(context, listen: false).fetchFasnacht();
+      await Provider.of<FasnachtsDatesProvider>(context, listen: false)
+          .fetchFasnacht();
       /* if (Provider.of<NewsProvider>(context, listen: false)
           .allNews
           .isNotEmpty) {
@@ -74,7 +74,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
   void didChangeDependencies() {
     if (_isInit) {
       // Provider.of<NewsProvider>(context).fetchProducts();
-      Provider.of<FasnachtsDates>(context).fetchFasnacht();
+      Provider.of<FasnachtsDatesProvider>(context).fetchFasnacht();
     }
     _isInit = false;
     super.didChangeDependencies();

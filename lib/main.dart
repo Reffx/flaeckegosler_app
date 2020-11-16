@@ -1,5 +1,3 @@
-import 'package:Flaeckegosler/models/fasnacht_date.dart';
-import 'package:Flaeckegosler/provider/newsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -8,17 +6,19 @@ import 'package:scoped_model/scoped_model.dart';
 import './scoped-models/main.dart';
 
 import './pages/news/newsFasnacht.dart';
-import 'pages/authScreen.dart';
+import './pages/authScreen.dart';
 import './pages/info.dart';
 import './pages/programm.dart';
 import './pages/ticker.dart';
 import './pages/event_admin.dart';
-import './pages/single_news.dart';
+import './pages/news/single_news.dart';
 
 import './provider/auth.dart';
 
 import './models/news.dart';
 import './models/event.dart';
+import 'provider/fasnachtsDatesProvider.dart';
+import 'provider/newsProvider.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           value: AuthProvider(),
         ),
         ChangeNotifierProvider(
-          create: (_) => FasnachtsDates(),
+          create: (_) => FasnachtsDatesProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => NewsProvider(),

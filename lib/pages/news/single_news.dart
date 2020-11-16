@@ -1,16 +1,11 @@
-import 'dart:async';
-
-import 'package:Flaeckegosler/widgets/news/buildRedakteur.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/ui_elements/title_default.dart';
-import '../models/news.dart';
-import '../models/Authors.dart';
-
 import 'package:flutter_html/flutter_html.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
+
+import '../../models/news.dart';
+import '../../widgets/news/buildRedakteur.dart';
+import '../../widgets/ui_elements/title_default.dart';
 
 Future launchURL(String url) async {
   if (await canLaunch(url)) {

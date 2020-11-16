@@ -1,8 +1,6 @@
 import 'dart:async';
+import 'package:Flaeckegosler/provider/fasnachtsDatesProvider.dart';
 
-import 'package:Flaeckegosler/models/fasnacht_date.dart';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,12 +17,13 @@ class _CountdownState extends State<Countdown> {
 
   @override
   initState() {
-    super.initState();       
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final myFasnachtDate = Provider.of<FasnachtsDates>(context, listen: false);
+    final myFasnachtDate =
+        Provider.of<FasnachtsDatesProvider>(context, listen: false);
     if (DateTime.parse(myFasnachtDate.fasnachtDateStart)
         .isAfter(DateTime.now())) {
       var date1 = DateTime.parse(myFasnachtDate.fasnachtDateStart);
@@ -33,15 +32,15 @@ class _CountdownState extends State<Countdown> {
       _counterHours = date1.difference(DateTime.now()).inHours % 24;
       _counterDays = date1.difference(DateTime.now()).inDays;
       String _days;
-       Timer.periodic(Duration(seconds: 1), (timer) {
-      if (mounted){
-       setState(() {
-          --_counterSeconds;
-             }); 
+      Timer.periodic(Duration(seconds: 1), (timer) {
+        if (mounted) {
+          setState(() {
+            --_counterSeconds;
+          });
         }
-      }); 
-       
-       if (_counterDays == 1) {
+      });
+
+      if (_counterDays == 1) {
         _days = 'Tag';
       } else {
         _days = 'Tage';
@@ -63,7 +62,7 @@ class _CountdownState extends State<Countdown> {
         _seconds = 'Sekunde';
       } else {
         _seconds = 'Sekunden';
-      } 
+      }
       return Container(
         child: Padding(
           padding: EdgeInsets.only(bottom: 10, left: 10, right: 10, top: 10),
@@ -72,7 +71,9 @@ class _CountdownState extends State<Countdown> {
             child: FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                ' ' +' ${_counterDays} ${_days}, ${_counterHours} ${_hours}, ${_counterMinutes} ${_minutes}, ${_counterSeconds} ${_seconds} ' + ' ',
+                ' ' +
+                    ' ${_counterDays} ${_days}, ${_counterHours} ${_hours}, ${_counterMinutes} ${_minutes}, ${_counterSeconds} ${_seconds} ' +
+                    ' ',
                 style: TextStyle(
                   height: 1.6,
                   fontWeight: FontWeight.bold,
