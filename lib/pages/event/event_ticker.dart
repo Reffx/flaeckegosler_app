@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:Flaeckegosler/models/event.dart';
-
-import './../widgets/news/event.dart';
+import '../../widgets/news/event.dart';
 
 class TickerPage extends StatefulWidget {
   final bool isNewLayout;

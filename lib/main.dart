@@ -9,8 +9,8 @@ import './pages/news/newsFasnacht.dart';
 import './pages/authScreen.dart';
 import './pages/info.dart';
 import './pages/programm.dart';
-import './pages/ticker.dart';
-import './pages/event_admin.dart';
+import './pages/event/event_ticker.dart';
+import './pages/event/event_admin.dart';
 import './pages/news/single_news.dart';
 
 import './provider/auth.dart';
