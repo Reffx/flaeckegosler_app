@@ -59,7 +59,7 @@ class NewsProvider with ChangeNotifier {
       _news = fetchedProductList;
       _selNewsId = null;
     }).catchError((error) {
-      return;
+      throw (error);
     });
   }
 

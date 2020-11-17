@@ -51,7 +51,27 @@ class _NewsPageState extends State<NewsPageFasnacht> {
       _isLoading = true;
     });
     Future.delayed(Duration.zero).then((_) async {
-      await Provider.of<NewsProvider>(context, listen: false).fetchProducts();
+      await Provider.of<NewsProvider>(context, listen: false)
+          .fetchProducts()
+          .catchError(
+        (error) {
+          showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: Text("Fehler beim Laden!"),
+              content: Text("Überprüfe deine Internetverbindung!"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Schliessen'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      );
       await Provider.of<FasnachtsDatesProvider>(context, listen: false)
           .fetchFasnacht();
       /* if (Provider.of<NewsProvider>(context, listen: false)
