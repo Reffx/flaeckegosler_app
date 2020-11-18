@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
-import 'package:Flaeckegosler/models/event.dart';
+
+import '../../provider/eventProvider.dart';
 import '../../widgets/news/event.dart';
 
 class TickerPage extends StatefulWidget {

@@ -16,9 +16,9 @@ import './pages/news/news_single.dart';
 import './provider/auth.dart';
 
 import './models/news.dart';
-import './models/event.dart';
 import './provider/fasnachtsDatesProvider.dart';
 import './provider/newsProvider.dart';
+import './provider/eventProvider.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
