@@ -5,20 +5,20 @@ import 'package:provider/provider.dart';
 import 'package:scoped_model/scoped_model.dart';
 import './scoped-models/main.dart';
 
-import './pages/news/newsFasnacht.dart';
+import './pages/news/news_list.dart';
 import './pages/authScreen.dart';
 import './pages/info.dart';
 import './pages/programm.dart';
 import './pages/event/event_ticker.dart';
 import './pages/event/event_admin.dart';
-import './pages/news/single_news.dart';
+import './pages/news/news_single.dart';
 
 import './provider/auth.dart';
 
 import './models/news.dart';
 import './models/event.dart';
-import 'provider/fasnachtsDatesProvider.dart';
-import 'provider/newsProvider.dart';
+import './provider/fasnachtsDatesProvider.dart';
+import './provider/newsProvider.dart';
 
 void main() {
   debugPaintSizeEnabled = false;

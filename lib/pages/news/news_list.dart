@@ -41,18 +41,18 @@ class _NewsPageState extends State<NewsPageFasnacht> {
 
   @override
   initState() {
-    _fetchProducts();
+    _fetchNewsList();
     super.initState();
     handleScroll(); //needed for handling the show of the FabCircularMenu
   }
 
-  _fetchProducts() {
+  _fetchNewsList() {
     setState(() {
       _isLoading = true;
     });
     Future.delayed(Duration.zero).then((_) async {
       await Provider.of<NewsProvider>(context, listen: false)
-          .fetchProducts()
+          .fetchNewsList()
           .catchError(
         (error) {
           showDialog(
@@ -87,7 +87,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
   }
 
   Future<Null> test() async {
-    _fetchProducts();
+    _fetchNewsList();
   }
 
   @override
