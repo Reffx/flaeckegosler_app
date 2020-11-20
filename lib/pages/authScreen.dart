@@ -1,5 +1,5 @@
 import 'package:Flaeckegosler/models/http_exception.dart';
-import 'package:Flaeckegosler/provider/auth.dart';
+import 'package:Flaeckegosler/provider/authProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/http_exception.dart';
@@ -231,3 +231,5 @@ class _AuthCardState extends State<AuthCard> {
     );
   }
 }
+
+class AuthProviderProvider {}

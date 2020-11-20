@@ -13,7 +13,7 @@ import './pages/event/event_ticker.dart';
 import './pages/event/event_admin.dart';
 import './pages/news/news_single.dart';
 
-import './provider/auth.dart';
+import './provider/authProvider.dart';
 
 import './models/news.dart';
 import './provider/fasnachtsDatesProvider.dart';
