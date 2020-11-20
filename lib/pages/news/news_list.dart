@@ -1,7 +1,6 @@
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 
@@ -9,18 +8,12 @@ import '../../models/news.dart';
 import '../../widgets/countdown/countdown.dart';
 import '../../widgets/ui_elements/madeWithLove.dart';
 import '../../widgets/news/newsWidget.dart';
+import '../../widgets/ui_elements/buildVersion.dart';
 import '../../provider/newsProvider.dart';
 import '../../provider/fasnachtsDatesProvider.dart';
-
-const my_url = 'https://flaeckegosler.ch/admin';
-
-Future launchURL(String url) async {
-  if (await canLaunch(url)) {
-    await launch(url, forceSafariVC: true, forceWebView: false);
-  } else {
-    print('Could not launch $url');
-  }
-}
+import '../../layout/backgroundImage.dart';
+import '../../layout/footerImage.dart';
+import '../../layout/navBarImageTitle.dart';
 
 class NewsPageFasnacht extends StatefulWidget {
   final bool isNewLayout;
@@ -118,8 +111,8 @@ class _NewsPageState extends State<NewsPageFasnacht> {
           Countdown(),
           NewsWidget(news: _allNews),
           MadeWithLoveWidget(),
-          _buildVersion(),
-          _getImageBottom(isNewLayout),
+          BuildVersion(),
+          FooterImage(isNewLayout),
         ],
       );
     } else {
@@ -146,76 +139,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
     }
   }
 
-  int _i = 5;
-
-  Widget _buildVersion() {
-    return Container(
-      child: Center(
-        child: GestureDetector(
-          onTap: () {
-            _i = _i - 1;
-            print(_i);
-            if (_i == 0) {
-              launchURL(my_url);
-              _i = 5;
-            }
-          },
-          child: Text(
-            ' Version 1.3.1 ',
-            style: TextStyle(
-              fontSize: 12.0,
-              // fontWeight: FontWeight.bold,
-              fontFamily: 'Oswald',
-              color: Colors.grey,
-              // background: Paint()..color = Colors.black,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Image _getImageBottom(bool isNewLayout) {
-    if (isNewLayout) {
-      return Image.asset(
-        'assets/layout_2020/news_bottom.png',
-        fit: BoxFit.fitWidth,
-      );
-    } else
-      return Image.asset(
-        'assets/zapfen.png',
-        fit: BoxFit.fitWidth,
-      );
-  }
-
-  Image getImageTitle(bool isNewLayout) {
-    if (isNewLayout) {
-      return Image.asset(
-        'assets/layout_2020/goslermythos_title.png',
-        height: 50,
-      );
-    } else
-      return Image.asset(
-        'assets/diadamas.png',
-        height: 40,
-      );
-  }
-
-  Image getBackgroundImage(bool isNewLayout) {
-    if (isNewLayout) {
-      return Image.asset(
-        'assets/layout_2020/MUSTER_REPETIEREND_apptitle.png',
-        fit: BoxFit.fitWidth,
-      );
-    } else {
-      return Image.asset(
-        'assets/appBarJubi.png',
-        fit: BoxFit.fitHeight,
-      );
-    }
-  }
-
-  EdgeInsets getTitlePadding(bool isNewLayout) {
+  EdgeInsets _getTitlePadding(bool isNewLayout) {
     if (isNewLayout) {
       return EdgeInsets.only(top: 5, bottom: 5);
     } else {
@@ -307,25 +231,11 @@ class _NewsPageState extends State<NewsPageFasnacht> {
                 floating: false,
                 expandedHeight: 120.0,
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: getTitlePadding(widget.isNewLayout),
-                  title: getImageTitle(widget.isNewLayout),
+                  titlePadding: _getTitlePadding(widget.isNewLayout),
+                  title: NavBarImageTitle(widget.isNewLayout),
                   centerTitle: true,
-                  background: getBackgroundImage(widget.isNewLayout),
+                  background: BackgroundImage(widget.isNewLayout),
                 ),
-                /* actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.event),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/ticker');
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.view_week),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/programm');
-                    },
-                  ),
-                ],*/
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
