@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:scoped_model/scoped_model.dart';
-
 import '../../models/event.dart';
-import '../../scoped-models/main.dart';
-import 'package:intl/intl.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
@@ -13,22 +9,22 @@ class EventCard extends StatelessWidget {
   EventCard(this.event, this.eventIndex);
 
   Widget _buildEventRowTime() {
-      return Row(children: <Widget>[
-        Container(
-          child: Text(
-            ' ' + event.playTime + ' ',
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              height: 1.2,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Oswald',
-              color: Colors.black,
-              background: Paint()..color = Colors.white,
-            ),
+    return Row(children: <Widget>[
+      Container(
+        child: Text(
+          ' ' + event.playTime + ' ',
+          textAlign: TextAlign.start,
+          style: TextStyle(
+            height: 1.2,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Oswald',
+            color: Colors.black,
+            background: Paint()..color = Colors.white,
           ),
         ),
-      ]);
+      ),
+    ]);
   }
 
   Widget _buildEventRowLocation() {
@@ -73,22 +69,19 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant<MainModel>(
-        builder: (BuildContext context, Widget child, MainModel model) {
-      return Container(
-        child: Container(
-          padding: EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              _buildEventRowTime(),
-              _buildEventRowLocation(),
-              _buildEventRowCity(),
-            ],
-          ),
+    return Container(
+      child: Container(
+        padding: EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            _buildEventRowTime(),
+            _buildEventRowLocation(),
+            _buildEventRowCity(),
+          ],
         ),
-      );
-    });
+      ),
+    );
   }
 }

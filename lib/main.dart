@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
-import 'package:scoped_model/scoped_model.dart';
-import './scoped-models/main.dart';
-
 import './pages/news/news_list.dart';
 import './pages/authScreen.dart';
 import './pages/programm.dart';
@@ -32,18 +29,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final MainModel _model = MainModel();
-
   bool _isAuthenticated = false;
 
   void initState() {
-    //  _model.autoAuthenticate();
-    _model.userSubject.listen((bool isAuthenticated) {
-      setState(() {
-        _isAuthenticated = isAuthenticated;
-        //test.fetchFasnacht();
-      });
-    });
     super.initState();
   }
 
@@ -71,42 +59,38 @@ class _MyAppState extends State<MyApp> {
       ],
       child:
           //DateTime.parse(v).isBefore(DateTime.now())
-          ScopedModel<MainModel>(
-        model: _model,
-        child: MaterialApp(
-          theme: myThemeData,
-          // home: AuthPage(), //only works wihtout '/' not used
-          routes: {
-            '/': (BuildContext context) => NewsPageFasnacht(isNewLayout),
-            '/news': (BuildContext context) => NewsPageFasnacht(isNewLayout),
-            '/ticker': (BuildContext context) => TickerPage(isNewLayout),
-            '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
-            '/auth': (BuildContext context) =>
-                !_isAuthenticated ? AuthScreen() : AuthScreen(),
-          },
-          onGenerateRoute: (RouteSettings settings) {
-            List<News> test = settings.arguments;
-            final List<String> pathElements = settings.name.split('/');
-            if (pathElements[0] != '') {
-              return null;
-            }
-            if (pathElements[1] == 'specific_news') {
-              final String newsId = pathElements[2];
-              final News news = test.firstWhere((News newsss) {
-                return newsss.id == newsId;
-              });
-              return MaterialPageRoute<bool>(
-                builder: (BuildContext context) => SingleNews(news),
-              );
-            }
+          MaterialApp(
+        theme: myThemeData,
+        // home: AuthPage(), //only works wihtout '/' not used
+        routes: {
+          '/': (BuildContext context) => NewsPageFasnacht(isNewLayout),
+          '/news': (BuildContext context) => NewsPageFasnacht(isNewLayout),
+          '/ticker': (BuildContext context) => TickerPage(isNewLayout),
+          '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
+          '/auth': (BuildContext context) =>
+              !_isAuthenticated ? AuthScreen() : AuthScreen(),
+        },
+        onGenerateRoute: (RouteSettings settings) {
+          List<News> test = settings.arguments;
+          final List<String> pathElements = settings.name.split('/');
+          if (pathElements[0] != '') {
             return null;
-          },
-          onUnknownRoute: (RouteSettings settings) {
-            return MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    NewsPageFasnacht(isNewLayout));
-          },
-        ),
+          }
+          if (pathElements[1] == 'specific_news') {
+            final String newsId = pathElements[2];
+            final News news = test.firstWhere((News newsss) {
+              return newsss.id == newsId;
+            });
+            return MaterialPageRoute<bool>(
+              builder: (BuildContext context) => SingleNews(news),
+            );
+          }
+          return null;
+        },
+        onUnknownRoute: (RouteSettings settings) {
+          return MaterialPageRoute(
+              builder: (BuildContext context) => NewsPageFasnacht(isNewLayout));
+        },
       ),
     );
   }
