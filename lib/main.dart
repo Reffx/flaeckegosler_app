@@ -7,7 +7,6 @@ import './scoped-models/main.dart';
 
 import './pages/news/news_list.dart';
 import './pages/authScreen.dart';
-import './pages/info.dart';
 import './pages/programm.dart';
 import './pages/event/event_ticker.dart';
 import './pages/event/event_admin.dart';
@@ -80,7 +79,6 @@ class _MyAppState extends State<MyApp> {
           routes: {
             '/': (BuildContext context) => NewsPageFasnacht(isNewLayout),
             '/news': (BuildContext context) => NewsPageFasnacht(isNewLayout),
-            '/info': (BuildContext context) => InfoPage(),
             '/ticker': (BuildContext context) => TickerPage(isNewLayout),
             '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
             '/auth': (BuildContext context) =>
