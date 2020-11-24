@@ -231,5 +231,3 @@ class _AuthCardState extends State<AuthCard> {
     );
   }
 }
-
-class AuthProviderProvider {}
