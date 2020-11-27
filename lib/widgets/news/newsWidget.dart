@@ -24,9 +24,9 @@ Widget _buildNewsList(List<News> news) {
       physics: ClampingScrollPhysics(),
       itemBuilder: (BuildContext context, int index) {
         if (news[index].newsTags == '') {
-          return NewsCard(news, news[index], index);
+          return NewsCard(news[index]);
         } else {
-          return NewsCardExtended(news, news[index], index);
+          return NewsCardExtended(news[index]);
         }
       },
       itemCount: 12, //news.length

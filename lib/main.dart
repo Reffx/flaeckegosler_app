@@ -1,3 +1,4 @@
+import 'package:Flaeckegosler/pages/news/imageZoomPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ import './models/news.dart';
 import './provider/fasnachtsDatesProvider.dart';
 import './provider/newsProvider.dart';
 import './provider/eventProvider.dart';
+import './pages/news/news_image.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -71,18 +73,26 @@ class _MyAppState extends State<MyApp> {
               !_isAuthenticated ? AuthScreen() : AuthScreen(),
         },
         onGenerateRoute: (RouteSettings settings) {
-          List<News> test = settings.arguments;
+          News test = settings.arguments;
           final List<String> pathElements = settings.name.split('/');
           if (pathElements[0] != '') {
             return null;
           }
           if (pathElements[1] == 'specific_news') {
-            final String newsId = pathElements[2];
-            final News news = test.firstWhere((News newsss) {
-              return newsss.id == newsId;
-            });
+            // final String newsId = pathElements[2];
+            // final News news = test.firstWhere((News newsss) {
+            //   return newsss.id == newsId;
+            ///   });
             return MaterialPageRoute<bool>(
-              builder: (BuildContext context) => SingleNews(news),
+              builder: (BuildContext context) => SingleNews(test),
+            );
+          } else if (pathElements[1] == 'specific_image') {
+            // final String galleryLink = pathElements[2];
+            // final News news = test.firstWhere((News newsss) {
+            //  return newsss.galleryLink == galleryLink;
+            // });
+            return MaterialPageRoute<bool>(
+              builder: (BuildContext context) => SimplePhotoViewPage(),
             );
           }
           return null;

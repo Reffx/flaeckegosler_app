@@ -76,11 +76,18 @@ class SingleNews extends StatelessWidget {
     if (single_news.galleryLink == "") {
       return Container();
     } else {
-      return LimitedBox(
-        maxHeight: 220,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [GalleryCard(), GalleryCard(), GalleryCard()],
+      return Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: LimitedBox(
+          maxHeight: 220,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              GalleryCard(single_news),
+              GalleryCard(single_news),
+              GalleryCard(single_news)
+            ],
+          ),
         ),
       );
     }
@@ -132,8 +139,8 @@ class SingleNews extends StatelessWidget {
               ),
             ),
             buildRedakteur(single_news.newsCreatedBy),
-            _buildMainText(),
             _buildGallery(),
+            _buildMainText(),
           ],
         ),
       ),

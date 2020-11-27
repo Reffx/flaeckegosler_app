@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import '../../models/news.dart';
 
 class NewsCard extends StatelessWidget {
-  final List<News> news;
   final News singleNews;
-  final int newsIndex;
 
-  NewsCard(this.news, this.singleNews, this.newsIndex);
+  NewsCard(this.singleNews);
 
   Widget _buildTitle() {
     return Padding(
@@ -63,8 +61,8 @@ class NewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.pushNamed<bool>(
-          context, '/specific_news/' + news[newsIndex].id,
-          arguments: news),
+          context, '/specific_news/' + singleNews.id,
+          arguments: singleNews),
       child: Container(
         child: Container(
           padding: EdgeInsets.all(15.0),
