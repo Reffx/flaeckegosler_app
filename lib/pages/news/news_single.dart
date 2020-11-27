@@ -1,3 +1,4 @@
+import 'package:Flaeckegosler/widgets/news/galleryCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -71,6 +72,20 @@ class SingleNews extends StatelessWidget {
     );
   }
 
+  Widget _buildGallery() {
+    if (single_news.galleryLink == "") {
+      return Container();
+    } else {
+      return LimitedBox(
+        maxHeight: 220,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: [GalleryCard(), GalleryCard(), GalleryCard()],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -118,6 +133,7 @@ class SingleNews extends StatelessWidget {
             ),
             buildRedakteur(single_news.newsCreatedBy),
             _buildMainText(),
+            _buildGallery(),
           ],
         ),
       ),
