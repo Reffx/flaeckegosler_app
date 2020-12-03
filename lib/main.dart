@@ -17,6 +17,7 @@ import './provider/fasnachtsDatesProvider.dart';
 import './provider/newsProvider.dart';
 import './provider/eventProvider.dart';
 import './pages/news/news_image.dart';
+import './provider/picturesProvider.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -54,6 +55,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (_) => NewsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PicturesProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => EventProvider(),

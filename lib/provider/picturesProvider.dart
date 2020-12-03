@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class NewsProvider with ChangeNotifier {
+class PicturesProvider with ChangeNotifier {
   List<Pictures> _pictures = [];
 
   Future<bool> fetchNewsList() {
