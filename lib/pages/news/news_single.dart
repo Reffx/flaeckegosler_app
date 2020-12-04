@@ -1,3 +1,4 @@
+import 'package:Flaeckegosler/widgets/news/gallery.dart';
 import 'package:Flaeckegosler/widgets/news/galleryCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -80,14 +81,7 @@ class SingleNews extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: LimitedBox(
           maxHeight: 220,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              GalleryCard(single_news),
-              GalleryCard(single_news),
-              GalleryCard(single_news)
-            ],
-          ),
+          child: Gallery(single_news),
         ),
       );
     }

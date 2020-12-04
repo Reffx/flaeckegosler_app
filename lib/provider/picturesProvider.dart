@@ -6,9 +6,13 @@ import 'dart:convert';
 class PicturesProvider with ChangeNotifier {
   List<Pictures> _pictures = [];
 
-  Future<bool> fetchNewsList() {
+  List<Pictures> get allPictures {
+    return List.from(_pictures);
+  }
+
+  Future<bool> fetchPicturesList() {
     return http
-        .get('https://flaeckegosler.ch/app/news-to-json/')
+        .get('https://flaeckegosler.ch/app/pics-to-json/')
         .then<Null>((http.Response response) {
       final List<Pictures> fetchedPicturesList = [];
       final Map<String, dynamic> picturesListData = json.decode(response.body);
