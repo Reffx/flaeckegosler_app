@@ -72,7 +72,7 @@ class _CountdownState extends State<Countdown> {
               fit: BoxFit.fitWidth,
               child: Text(
                 ' ' +
-                    ' ${_counterDays} ${_days}, ${_counterHours} ${_hours}, ${_counterMinutes} ${_minutes}, ${_counterSeconds} ${_seconds} ' +
+                    ' $_counterDays $_days, $_counterHours $_hours, $_counterMinutes $_minutes, $_counterSeconds $_seconds ' +
                     ' ',
                 style: TextStyle(
                   height: 1.6,
@@ -91,6 +91,5 @@ class _CountdownState extends State<Countdown> {
         height: 0,
       );
     }
-    ;
   }
 }

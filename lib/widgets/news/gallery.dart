@@ -1,4 +1,3 @@
-import 'package:Flaeckegosler/models/pictures.dart';
 import 'package:Flaeckegosler/provider/picturesProvider.dart';
 import 'package:Flaeckegosler/widgets/news/galleryCard.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +18,7 @@ class _GalleryState extends State<Gallery> {
   final News singleNews;
   _GalleryState(this.singleNews);
 
+  // ignore: unused_field
   var _isLoading = false;
 
   @override
@@ -69,6 +69,5 @@ class _GalleryState extends State<Gallery> {
         GalleryCard(singleNews),
       ],
     );
-    // TODO: implement build
   }
 }

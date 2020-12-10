@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class SingleImage extends StatelessWidget {
-  final News single_news;
+  final News singleNews;
 
-  SingleImage(this.single_news);
+  SingleImage(this.singleNews);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class SingleImage extends StatelessWidget {
         Scaffold(
       appBar: AppBar(),
       body: PhotoView(
-        imageProvider: NetworkImage(single_news.imageURL),
+        imageProvider: NetworkImage(singleNews.imageURL),
         minScale: PhotoViewComputedScale.contained * 0.8,
         maxScale: PhotoViewComputedScale.covered * 2,
         enableRotation: true,

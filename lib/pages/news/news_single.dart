@@ -1,5 +1,4 @@
 import 'package:Flaeckegosler/widgets/news/gallery.dart';
-import 'package:Flaeckegosler/widgets/news/galleryCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,9 +17,9 @@ Future launchURL(String url) async {
 }
 
 class SingleNews extends StatelessWidget {
-  final News single_news;
+  final News singleNews;
 
-  SingleNews(this.single_news);
+  SingleNews(this.singleNews);
 
   Widget _buildTitelBild() {
     return Container(
@@ -35,17 +34,17 @@ class SingleNews extends StatelessWidget {
         //borderRadius: BorderRadius.circular(15),
         color: Colors.white,
         image: DecorationImage(
-            image: NetworkImage(single_news.imageURL), fit: BoxFit.cover),
+            image: NetworkImage(singleNews.imageURL), fit: BoxFit.cover),
       ),
     );
   }
 
   Widget _buildImageDescription() {
-    if (single_news.imageDescription != null) {
+    if (singleNews.imageDescription != null) {
       return Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Text(
-          single_news.imageDescription,
+          singleNews.imageDescription,
           style: TextStyle(color: Colors.grey, fontSize: 10),
         ),
       );
@@ -59,7 +58,7 @@ class SingleNews extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 10.0, left: 20, right: 20),
       child: Html(
-        data: single_news.newsMainText,
+        data: singleNews.newsMainText,
         onLinkTap: (url) {
           if (url.startsWith('http') || url.startsWith('www')) {
             print(url.startsWith('http'));
@@ -74,14 +73,14 @@ class SingleNews extends StatelessWidget {
   }
 
   Widget _buildGallery() {
-    if (single_news.galleryLink == "") {
+    if (singleNews.galleryLink == "") {
       return Container();
     } else {
       return Padding(
         padding: const EdgeInsets.all(12.0),
         child: LimitedBox(
           maxHeight: 220,
-          child: Gallery(single_news),
+          child: Gallery(singleNews),
         ),
       );
     }
@@ -113,7 +112,7 @@ class SingleNews extends StatelessWidget {
             _buildImageDescription(),
             Container(
               padding: EdgeInsets.only(top: 20.0, left: 20, right: 20),
-              child: TitleDefault(single_news.newsTitle),
+              child: TitleDefault(singleNews.newsTitle),
             ),
             Container(
               padding: EdgeInsets.only(top: 20.0),
@@ -121,7 +120,7 @@ class SingleNews extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(Icons.access_time, size: 12),
-                  Text(" " + single_news.timeCreatedFormatted,
+                  Text(" " + singleNews.timeCreatedFormatted,
                       style: (TextStyle(fontSize: 10))),
                 ],
               ),
@@ -129,10 +128,10 @@ class SingleNews extends StatelessWidget {
             Container(
               padding: EdgeInsets.only(top: 10.0, left: 20, right: 20),
               child: Html(
-                data: "<b>" + single_news.newsIntroText + "</b>",
+                data: "<b>" + singleNews.newsIntroText + "</b>",
               ),
             ),
-            buildRedakteur(single_news.newsCreatedBy),
+            buildRedakteur(singleNews.newsCreatedBy),
             _buildGallery(),
             _buildMainText(),
           ],

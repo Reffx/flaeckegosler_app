@@ -7,7 +7,7 @@ import './pages/news/news_list.dart';
 import './pages/authScreen.dart';
 import './pages/programm.dart';
 import './pages/event/event_ticker.dart';
-import './pages/event/event_admin.dart';
+//import './pages/event/event_admin.dart';
 import './pages/news/news_single.dart';
 
 import './provider/authProvider.dart';
@@ -16,7 +16,6 @@ import './models/news.dart';
 import './provider/fasnachtsDatesProvider.dart';
 import './provider/newsProvider.dart';
 import './provider/eventProvider.dart';
-import './pages/news/news_image.dart';
 import './provider/picturesProvider.dart';
 
 void main() {
