@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../models/http_exception.dart';
 
@@ -53,8 +54,36 @@ class AuthProvider with ChangeNotifier {
         ),
       );
       notifyListeners();
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode({
+        'token': _token,
+        'userId': _userId,
+        'expiryDate': _expiryDate.toIso8601String()
+      });
+      prefs.setString('userData', userData);
     } catch (error) {
       throw error;
+    }
+  }
+
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('userData')) {
+      return false;
+    } else {
+      final extractedUserData =
+          json.decode(prefs.getString('userData')) as Map<String, Object>;
+      final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
+      if (expiryDate.isAfter(DateTime.now())) {
+        return false;
+      } else {
+        _token = extractedUserData['token'];
+        _userId = extractedUserData['userId'];
+        _expiryDate = extractedUserData['expiryDate'];
+        notifyListeners();
+        // _autoLogout();
+        return true;
+      }
     }
   }
 
