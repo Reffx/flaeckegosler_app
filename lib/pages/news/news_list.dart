@@ -11,6 +11,8 @@ import '../../widgets/news/newsWidget.dart';
 import '../../widgets/ui_elements/buildVersion.dart';
 import '../../provider/newsProvider.dart';
 import '../../provider/fasnachtsDatesProvider.dart';
+import '../../provider/authProvider.dart';
+
 import '../../layout/backgroundImage.dart';
 import '../../layout/footerImage.dart';
 import '../../layout/navBarImageTitle.dart';
@@ -34,6 +36,7 @@ class _NewsPageState extends State<NewsPageFasnacht> {
 
   @override
   initState() {
+    Provider.of<AuthProvider>(context, listen: false).tryAutoLogin();
     _fetchNewsList();
     super.initState();
     handleScroll(); //needed for handling the show of the FabCircularMenu
