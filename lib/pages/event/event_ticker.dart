@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../provider/authProvider.dart';
 import '../../provider/eventProvider.dart';
 import '../../widgets/news/event.dart';
 
@@ -128,23 +129,27 @@ class _TickerStatePage extends State<TickerPage> {
                     Container(
                       padding: EdgeInsets.only(bottom: 20, top: 20),
                       child: Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            _k = _k - 1;
-                            print(_k);
-                            if (_k == 0) {
-                              Navigator.pushNamed(context, '/auth');
-                              _k = 5;
-                            }
-                          },
-                          child: Text(
-                            'Made with ♥ in Rothenburg',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Oswald',
-                              color: Colors.black,
+                        child: Consumer<AuthProvider>(
+                          builder: (ctx, auth, _) => GestureDetector(
+                            onTap: () {
+                              _k = _k - 1;
+                              print(_k);
+                              if (_k == 0) {
+                                auth.isAuth
+                                    ? Navigator.pushNamed(context, '/userHome')
+                                    : Navigator.pushNamed(context, '/auth');
+                                _k = 5;
+                              }
+                            },
+                            child: Text(
+                              'Made with ♥ in Rothenburg',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Oswald',
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),

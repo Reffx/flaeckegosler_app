@@ -17,6 +17,7 @@ import './provider/fasnachtsDatesProvider.dart';
 import './provider/newsProvider.dart';
 import './provider/eventProvider.dart';
 import './provider/picturesProvider.dart';
+import 'pages/authorization/userHome.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -66,12 +67,13 @@ class _MyAppState extends State<MyApp> {
           //DateTime.parse(v).isBefore(DateTime.now())
           MaterialApp(
         theme: myThemeData,
-        // home: AuthPage(), //only works wihtout '/' not used
+        //home: AuthPage(), //only works wihtout '/' not used
         routes: {
           '/': (BuildContext context) => NewsPageFasnacht(isNewLayout),
           '/news': (BuildContext context) => NewsPageFasnacht(isNewLayout),
           '/ticker': (BuildContext context) => TickerPage(isNewLayout),
           '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
+          '/userHome': (BuildContext context) => UserHome(),
           '/auth': (BuildContext context) =>
               !_isAuthenticated ? AuthScreen() : AuthScreen(),
         },
