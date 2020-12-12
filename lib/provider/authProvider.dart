@@ -22,9 +22,8 @@ class AuthProvider with ChangeNotifier {
         _expiryDate.isAfter(DateTime.now()) &&
         _token != null) {
       return _token;
-    } else {
-      return null;
     }
+    return null;
   }
 
   String get userId {
@@ -66,7 +65,7 @@ class AuthProvider with ChangeNotifier {
         {
           'token': _token,
           'userId': _userId,
-          'expiryDate': _expiryDate.toIso8601String()
+          'expiryDate': _expiryDate.toIso8601String(),
         },
       );
       prefs.setString('userData', userData);
@@ -79,21 +78,20 @@ class AuthProvider with ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('userData')) {
       return false;
-    } else {
-      final extractedUserData =
-          json.decode(prefs.getString('userData')) as Map<String, Object>;
-      final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
-      if (expiryDate.isAfter(DateTime.now())) {
-        return false;
-      } else {
-        _token = extractedUserData['token'];
-        _userId = extractedUserData['userId'];
-        _expiryDate = extractedUserData['expiryDate'];
-        notifyListeners();
-        _autoLogout();
-        return true;
-      }
     }
+    final extractedUserData =
+        json.decode(prefs.getString('userData')) as Map<String, Object>;
+    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
+
+    if (expiryDate.isBefore(DateTime.now())) {
+      return false;
+    }
+    _token = extractedUserData['token'];
+    _userId = extractedUserData['userId'];
+    _expiryDate = expiryDate;
+    notifyListeners();
+    _autoLogout();
+    return true;
   }
 
   Future<void> signup(String email, String password) async {
