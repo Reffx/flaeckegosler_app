@@ -28,6 +28,7 @@ dependencies:
   provider: ^4.0.2
   fab_circular_menu: ^1.0.0
   photo_view: ^0.5.0
+  location: ^3.1.0
   
 
 dev_dependencies:
