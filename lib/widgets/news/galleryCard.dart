@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class GalleryCard extends StatelessWidget {
   final News news;
-  GalleryCard(this.news);
+  final String galleryLink;
+  GalleryCard(this.news, this.galleryLink);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class GalleryCard extends StatelessWidget {
       onTap: () => Navigator.pushNamed<bool>(
         context,
         '/specific_image/' + news.id,
-        arguments: news,
+        arguments: galleryLink,
       ),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -20,8 +21,8 @@ class GalleryCard extends StatelessWidget {
           width: MediaQuery.of(context).size.width - 40,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              "assets/redakteure/raphikoch.png",
+            child: Image.network(
+              galleryLink,
               fit: BoxFit.cover,
             ),
           ),
