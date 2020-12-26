@@ -61,24 +61,42 @@ class _GalleryState extends State<Gallery> {
 
   List<Widget> _createGallery(singleNews) {
     final List<Widget> test = [];
-    var allPictures =
-        Provider.of<PicturesProvider>(context, listen: false).allPictures;
-    for (int temp = 0; temp < allPictures.length; temp++) {
-      if (allPictures[temp].albumTitle == singleNews.galleryLink) {
-        for (int temp2 = 0;
-            temp2 < allPictures[temp].specificImage.length;
-            temp2++) {
-          test.add(GalleryCard(
-              singleNews, allPictures[temp].specificImage[temp2].pictureLink));
+    double width =
+        MediaQuery.of(context).size.width; //+12 padding build gallery
+    if (_isLoading == true) {
+      test.add(
+        Container(
+          padding: EdgeInsets.only(left: (width / 2) - 12 - 30 - 6),
+          child: Center(
+              child: SizedBox(
+            height: 60,
+            width: 60,
+            child: CircularProgressIndicator(),
+          )),
+        ),
+      );
+      return test;
+    } else {
+      var allPictures =
+          Provider.of<PicturesProvider>(context, listen: false).allPictures;
+      for (int temp = 0; temp < allPictures.length; temp++) {
+        if (allPictures[temp].albumTitle == singleNews.galleryLink) {
+          for (int temp2 = 0;
+              temp2 < allPictures[temp].specificImage.length;
+              temp2++) {
+            test.add(GalleryCard(singleNews,
+                allPictures[temp].specificImage[temp2].pictureLink));
+          }
         }
       }
+      return test;
     }
-    return test;
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView(
+      shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       children: [
         ..._createGallery(singleNews),
