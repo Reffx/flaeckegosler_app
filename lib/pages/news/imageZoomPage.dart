@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class SimplePhotoViewPage extends StatelessWidget {
+  final String galleryLink;
+
+  SimplePhotoViewPage(this.galleryLink);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Simple Photo View'),
+        title: Text(''),
       ),
       body: PhotoView(
         imageProvider: NetworkImage(
-          'https://resocoder.com/wp-content/uploads/2019/04/thumbnail-2.png',
+          galleryLink,
         ),
         // Contained = the smallest possible size to fit one dimension of the screen
         minScale: PhotoViewComputedScale.contained * 0.8,
