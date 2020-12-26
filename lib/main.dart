@@ -78,7 +78,13 @@ class _MyAppState extends State<MyApp> {
               !_isAuthenticated ? AuthScreen() : AuthScreen(),
         },
         onGenerateRoute: (RouteSettings settings) {
-          News test = settings.arguments;
+          News test;
+          String galleryLink;
+          if (settings.arguments is News) {
+            test = settings.arguments;
+          } else if (settings.arguments is String) {
+            galleryLink = settings.arguments;
+          }
           final List<String> pathElements = settings.name.split('/');
           if (pathElements[0] != '') {
             return null;
@@ -92,12 +98,13 @@ class _MyAppState extends State<MyApp> {
               builder: (BuildContext context) => SingleNews(test),
             );
           } else if (pathElements[1] == 'specific_image') {
-            // final String galleryLink = pathElements[2];
+            //final String galleryLink = pathElements[2];
             // final News news = test.firstWhere((News newsss) {
             //  return newsss.galleryLink == galleryLink;
             // });
             return MaterialPageRoute<bool>(
-              builder: (BuildContext context) => SimplePhotoViewPage(),
+              builder: (BuildContext context) =>
+                  SimplePhotoViewPage(galleryLink),
             );
           }
           return null;
