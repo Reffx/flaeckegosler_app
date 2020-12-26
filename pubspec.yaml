@@ -23,13 +23,12 @@ dependencies:
   flutter_html: ^1.0.2
   url_launcher: ^5.0.0
   shared_preferences: ^0.5.3+1
-  rxdart: ^0.20.0
+  rxdart: ^0.25.0
   datetime_picker_formfield: ^0.1.8
   provider: ^4.0.2
   fab_circular_menu: ^1.0.0
   photo_view: ^0.5.0
-  location: ^3.1.0
-  
+  location: ^3.1.0  
 
 dev_dependencies:
   flutter_test:
