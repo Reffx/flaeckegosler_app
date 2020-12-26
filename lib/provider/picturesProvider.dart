@@ -23,6 +23,7 @@ class PicturesProvider with ChangeNotifier {
         String picturesId,
         dynamic picturesData,
       ) {
+        //Resolve map to List
         List<SpecificImage> temp = [];
         picturesData['pictures'].forEach((k, v) =>
             (temp.add(SpecificImage(pictureName: k, pictureLink: v))));
@@ -33,7 +34,6 @@ class PicturesProvider with ChangeNotifier {
             bodyText: picturesData['bodyText'],
             dateUnix: picturesData['dateUnix'],
             dateFormatted: picturesData['dateFormatted'],
-            //pictures: picturesData['pictures']);
             specificImage: temp);
         fetchedPicturesList.add(pictures);
       });

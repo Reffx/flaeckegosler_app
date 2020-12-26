@@ -59,14 +59,29 @@ class _GalleryState extends State<Gallery> {
     });
   }
 
+  List<Widget> _createGallery(singleNews) {
+    final List<Widget> test = [];
+    var allPictures =
+        Provider.of<PicturesProvider>(context, listen: false).allPictures;
+    for (int temp = 0; temp < allPictures.length; temp++) {
+      if (allPictures[temp].albumTitle == singleNews.galleryLink) {
+        for (int temp2 = 0;
+            temp2 < allPictures[temp].specificImage.length;
+            temp2++) {
+          test.add(GalleryCard(
+              singleNews, allPictures[temp].specificImage[temp2].pictureLink));
+        }
+      }
+    }
+    return test;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.horizontal,
       children: [
-        GalleryCard(singleNews),
-        GalleryCard(singleNews),
-        GalleryCard(singleNews),
+        ..._createGallery(singleNews),
       ],
     );
   }
