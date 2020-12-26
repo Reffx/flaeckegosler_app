@@ -5,9 +5,9 @@ class Pictures {
   final String menuTitle;
   final String albumTitle;
   final String bodyText;
-  final String dateUnix;
+  final int dateUnix;
   final String dateFormatted;
-  final List<dynamic> pictures;
+  final List<SpecificImage> specificImage;
 
   Pictures({
     @required this.id,
@@ -16,6 +16,16 @@ class Pictures {
     @required this.bodyText,
     @required this.dateUnix,
     @required this.dateFormatted,
-    @required this.pictures,
+    @required this.specificImage,
+  });
+}
+
+class SpecificImage {
+  final String pictureName;
+  final String pictureLink;
+
+  SpecificImage({
+    @required this.pictureName,
+    @required this.pictureLink,
   });
 }

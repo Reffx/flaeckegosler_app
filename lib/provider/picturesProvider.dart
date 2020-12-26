@@ -19,7 +19,13 @@ class PicturesProvider with ChangeNotifier {
       if (picturesListData == null) {
         return;
       }
-      picturesListData.forEach((String picturesId, dynamic picturesData) {
+      picturesListData.forEach((
+        String picturesId,
+        dynamic picturesData,
+      ) {
+        List<SpecificImage> temp = [];
+        picturesData['pictures'].forEach((k, v) =>
+            (temp.add(SpecificImage(pictureName: k, pictureLink: v))));
         final Pictures pictures = Pictures(
             id: picturesId.toString(),
             menuTitle: picturesData['menuTitle'],
@@ -27,7 +33,8 @@ class PicturesProvider with ChangeNotifier {
             bodyText: picturesData['bodyText'],
             dateUnix: picturesData['dateUnix'],
             dateFormatted: picturesData['dateFormatted'],
-            pictures: picturesData['pictures']);
+            //pictures: picturesData['pictures']);
+            specificImage: temp);
         fetchedPicturesList.add(pictures);
       });
       _pictures = fetchedPicturesList;
