@@ -11,6 +11,17 @@ class SimplePhotoViewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(''),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.announcement_rounded,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
+        ],
       ),
       body: PhotoView(
         imageProvider: NetworkImage(
