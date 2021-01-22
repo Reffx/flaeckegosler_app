@@ -1,6 +1,7 @@
 # gosler_app
 
-A new Flutter application.
+Neu in build 13 (1.3.7?)
+- Verbesserter Zoom- und Rotationsmechanismus beim Betrachten einzelner Bildern in der Galerie
 
 ## Getting Started
 
