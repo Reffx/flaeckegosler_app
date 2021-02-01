@@ -27,7 +27,7 @@ class BuildVersion extends StatelessWidget {
             }
           },
           child: Text(
-            ' Version 1.3.8 ',
+            ' Version 1.3.9 ',
             style: TextStyle(
               fontSize: 12.0,
               // fontWeight: FontWeight.bold,

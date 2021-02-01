@@ -1,3 +1,4 @@
+import 'package:Flaeckegosler/pages/Schnitzeljadg/drinkQuizz.dart';
 import 'package:Flaeckegosler/pages/Schnitzeljadg/fettquiz.dart';
 import 'package:Flaeckegosler/pages/Schnitzeljadg/models/placeProvider.dart';
 import 'package:Flaeckegosler/pages/news/imageZoomPage.dart';
@@ -82,6 +83,7 @@ class _MyAppState extends State<MyApp> {
           '/userHome': (BuildContext context) => UserHome(),
           '/secretCode': (BuildContext context) => SecretCodePage(),
           '/fettQuizz': (BuildContext context) => FettQuizzPage(),
+          '/drinkQuizz': (BuildContext context) => DrinkQuizzPage(),
           '/auth': (BuildContext context) =>
               !_isAuthenticated ? AuthScreen() : AuthScreen(),
         },

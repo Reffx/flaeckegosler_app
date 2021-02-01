@@ -168,11 +168,11 @@ class _SimplePhotoViewPageState extends State<SimplePhotoViewPage> {
   _getStack() {
     var _latitude = Provider.of<PlaceProvider>(context, listen: false)
         .allEvents
-        .elementAt(1)
+        .elementAt(2)
         .latitude;
     var _longitude = Provider.of<PlaceProvider>(context, listen: false)
         .allEvents
-        .elementAt(1)
+        .elementAt(2)
         .longitude;
     if (controller.rotation > 30.0) {
       return Center(

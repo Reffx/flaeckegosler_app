@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:async';
+import 'package:http/http.dart' as http;
+
+import 'models/highScore.dart';
 
 class SnakeGame extends StatefulWidget {
   @override
@@ -8,6 +13,10 @@ class SnakeGame extends StatefulWidget {
 }
 
 class _SnakeGameState extends State<SnakeGame> {
+  List<HighScore> _highScoreData = [];
+  var _userName = '';
+  var _isLoading = false;
+
   final int squaresPerRow = 20;
   final int squaresPerCol = 40;
   final fontStyle = TextStyle(color: Colors.white, fontSize: 20);
@@ -97,24 +106,48 @@ class _SnakeGameState extends State<SnakeGame> {
     isPlaying = false;
 
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Game Over'),
-            content: Text(
-              'Score: ${snake.length - 2}',
-              style: TextStyle(fontSize: 20),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Game Over'),
+          content: Container(
+            height: 80,
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Score: ${snake.length - 2}',
+                  style: TextStyle(fontSize: 20),
+                ),
+                TextFormField(
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.text,
+                  onChanged: (value) {
+                    _userName = value.toString();
+                  },
+                ),
+              ],
             ),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Close'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Send Score'),
+              onPressed: () {
+                if (_userName != '') {
+                  addScore((snake.length - 2).toString(), _userName);
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget build(BuildContext context) {
@@ -198,6 +231,19 @@ class _SnakeGameState extends State<SnakeGame> {
                           startGame();
                         }
                       }),
+                  FlatButton(
+                      color: isPlaying ? Colors.black : Colors.green,
+                      child: Text(
+                        isPlaying ? '' : 'Highscore',
+                        style: fontStyle,
+                      ),
+                      onPressed: () {
+                        if (isPlaying) {
+                        } else {
+                          fetchHighscore();
+                          _showHighScoreDialog();
+                        }
+                      }),
                   Text(
                     'Score: ${snake.length - 2}',
                     style: fontStyle,
@@ -207,5 +253,99 @@ class _SnakeGameState extends State<SnakeGame> {
         ],
       ),
     );
+  }
+
+  _showHighScoreDialog() {
+    _highScoreData.sort((a, b) => b.score.compareTo(a.score));
+    _isLoading
+        ? Center(
+            child: Container(
+              padding: EdgeInsets.only(top: 000.0),
+              child: CircularProgressIndicator(),
+            ),
+          )
+        : showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              Widget scoreCards = GestureDetector(
+                onTap: () => Navigator.of(context).pop(),
+                child: ListView(
+                  children: [
+                    Text(
+                      'Score </> Name',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 30),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        var tempScore = _highScoreData[index].score;
+                        var tempName = _highScoreData[index].userName;
+                        return Text(
+                          '$tempScore $tempName',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20),
+                        );
+                      },
+                      itemCount: _highScoreData.length,
+                    ),
+                  ],
+                ),
+              );
+              return scoreCards;
+            },
+          );
+  }
+
+  void addScore(String score, String userName) {
+    const url = 'https://flutter-products-6da30.firebaseio.com/snakeScore.json';
+    http.post(
+      url,
+      body: json.encode({
+        'score': score,
+        'userName': userName,
+      }),
+    );
+    /*final newProduct = HighScore(
+      score: int.parse(score),
+      userName: userName,
+    );
+    _highScoreData.add(newProduct);
+    // _items.insert(0, newProduct); // at the start of the list
+    // notifyListeners();*/
+  }
+
+  Future<bool> fetchHighscore() async {
+    setState(() {
+      _isLoading = true;
+    });
+    return http
+        .get('https://flutter-products-6da30.firebaseio.com/snakeScore.json')
+        .timeout(Duration(seconds: 6))
+        .then<Null>((http.Response response) {
+      final List<HighScore> fetchtedEventList = [];
+      final Map<String, dynamic> eventListData = json.decode(response.body);
+      if (eventListData == null) {
+        return;
+      }
+      eventListData.forEach((String eventId, dynamic eventData) {
+        final HighScore event = HighScore(
+          score: int.parse(eventData['score']),
+          userName: eventData['userName'],
+        );
+        fetchtedEventList.add(event);
+      });
+      _highScoreData = fetchtedEventList;
+      setState(() {
+        _isLoading = false;
+        _showHighScoreDialog();
+      });
+    }).catchError((error) {
+      return _highScoreData;
+    });
   }
 }

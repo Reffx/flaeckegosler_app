@@ -1,10 +1,16 @@
+import 'package:Flaeckegosler/pages/Schnitzeljadg/quizzMap.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import './snakeGame.dart';
+import 'models/place.dart';
+import 'models/placeProvider.dart';
 
 class SecretCodePage extends StatelessWidget {
   var text = '';
   @override
   Widget build(BuildContext context) {
+    var _allPlaces =
+        Provider.of<PlaceProvider>(context, listen: false).allEvents;
     final deviceSize = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -43,8 +49,118 @@ class SecretCodePage extends StatelessWidget {
                           onFieldSubmitted: (value) {
                             text = '';
                             if (value.toString() == 'kursiv!') {
-                              Navigator.pushNamed(context, '/fettQuizz');
-                            } else if (value.toString() == 'Snake!') {
+                              Navigator.pushNamed(context, '/fettQuizz'); //map1
+                            } else if (value.toString() == 'Schnääps!') {
+                              Navigator.pushNamed(
+                                  context, '/drinkQuizz'); //map2
+                            } else if (value.toString() == 'kayCheat_2000') {
+                              //Kay spiel, map 3
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (ctx) => QuizzMap(
+                                    initialLocation: PlaceLocation(
+                                        latitude:
+                                            _allPlaces.elementAt(2).latitude,
+                                        longitude:
+                                            _allPlaces.elementAt(2).longitude),
+                                    isSelecting: false,
+                                  ),
+                                ),
+                              );
+                            } else if (value.toString() ==
+                                '_Bodechlapfhöchi2020') {
+                              //map 4
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (ctx) => QuizzMap(
+                                    initialLocation: PlaceLocation(
+                                        latitude:
+                                            _allPlaces.elementAt(3).latitude,
+                                        longitude:
+                                            _allPlaces.elementAt(3).longitude),
+                                    isSelecting: false,
+                                  ),
+                                ),
+                              );
+                            } else if (value.toString() == '2022_ExpeditioN') {
+                              //map 5
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (ctx) => QuizzMap(
+                                    initialLocation: PlaceLocation(
+                                        latitude:
+                                            _allPlaces.elementAt(4).latitude,
+                                        longitude:
+                                            _allPlaces.elementAt(4).longitude),
+                                    isSelecting: false,
+                                  ),
+                                ),
+                              );
+                            } else if (value.toString() == 'Raclette_Schlag') {
+                              //map 6
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (ctx) => QuizzMap(
+                                    initialLocation: PlaceLocation(
+                                        latitude:
+                                            _allPlaces.elementAt(5).latitude,
+                                        longitude:
+                                            _allPlaces.elementAt(5).longitude),
+                                    isSelecting: false,
+                                  ),
+                                ),
+                              );
+                            } else if (value.toString() ==
+                                'Braui&Sible4wedding') {
+                              //map 7
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (ctx) => QuizzMap(
+                                    initialLocation: PlaceLocation(
+                                        latitude:
+                                            _allPlaces.elementAt(6).latitude,
+                                        longitude:
+                                            _allPlaces.elementAt(6).longitude),
+                                    isSelecting: false,
+                                  ),
+                                ),
+                              );
+                            } else if (value.toString() ==
+                                'WageEschFertig2022') {
+                              //map 8
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (ctx) => QuizzMap(
+                                    initialLocation: PlaceLocation(
+                                        latitude:
+                                            _allPlaces.elementAt(7).latitude,
+                                        longitude:
+                                            _allPlaces.elementAt(7).longitude),
+                                    isSelecting: false,
+                                  ),
+                                ),
+                              );
+                            } else if (value.toString() == 'map9') {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (ctx) => QuizzMap(
+                                    initialLocation: PlaceLocation(
+                                        latitude:
+                                            _allPlaces.elementAt(8).latitude,
+                                        longitude:
+                                            _allPlaces.elementAt(8).longitude),
+                                    isSelecting: false,
+                                  ),
+                                ),
+                              );
+                            } else if (value.toString() == 'Snake') {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
