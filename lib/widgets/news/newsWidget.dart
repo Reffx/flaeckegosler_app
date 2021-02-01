@@ -29,7 +29,7 @@ Widget _buildNewsList(List<News> news) {
           return NewsCardExtended(news[index]);
         }
       },
-      itemCount: 12, //news.length
+      itemCount: 80, //news.length
     );
   } else {
     newsCards = Container();

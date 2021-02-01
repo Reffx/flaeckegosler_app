@@ -1,3 +1,5 @@
+import 'package:Flaeckegosler/pages/Schnitzeljadg/fettquiz.dart';
+import 'package:Flaeckegosler/pages/Schnitzeljadg/models/placeProvider.dart';
 import 'package:Flaeckegosler/pages/news/imageZoomPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,6 +19,7 @@ import './provider/fasnachtsDatesProvider.dart';
 import './provider/newsProvider.dart';
 import './provider/eventProvider.dart';
 import './provider/picturesProvider.dart';
+import 'pages/Schnitzeljadg/secretCode.dart';
 import 'pages/authorization/userHome.dart';
 
 void main() {
@@ -62,6 +65,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (_) => EventProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => PlaceProvider(),
+        ),
       ],
       child:
           //DateTime.parse(v).isBefore(DateTime.now())
@@ -74,6 +80,8 @@ class _MyAppState extends State<MyApp> {
           '/ticker': (BuildContext context) => TickerPage(isNewLayout),
           '/programm': (BuildContext context) => ProgrammPage(isNewLayout),
           '/userHome': (BuildContext context) => UserHome(),
+          '/secretCode': (BuildContext context) => SecretCodePage(),
+          '/fettQuizz': (BuildContext context) => FettQuizzPage(),
           '/auth': (BuildContext context) =>
               !_isAuthenticated ? AuthScreen() : AuthScreen(),
         },

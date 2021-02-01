@@ -1,3 +1,4 @@
+import 'package:Flaeckegosler/pages/Schnitzeljadg/models/placeProvider.dart';
 import 'package:fab_circular_menu/fab_circular_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -70,6 +71,8 @@ class _NewsPageState extends State<NewsPageFasnacht> {
       );
       await Provider.of<FasnachtsDatesProvider>(context, listen: false)
           .fetchFasnacht();
+      //Used for schnitzeljadg
+      Provider.of<PlaceProvider>(context, listen: false).fetchPlaces();
       /* if (Provider.of<NewsProvider>(context, listen: false)
           .allNews
           .isNotEmpty) {
@@ -227,8 +230,14 @@ class _NewsPageState extends State<NewsPageFasnacht> {
             controller: _scrollController,
             slivers: <Widget>[
               SliverAppBar(
-                leading: Image.asset('assets/goslergrend.png',
-                    fit: BoxFit.fitHeight),
+                leading: GestureDetector(
+                  child: Image.asset(
+                    'assets/goslergrend.png',
+                    fit: BoxFit.fitHeight,
+                  ),
+                  onLongPress: () =>
+                      {Navigator.pushNamed(context, '/secretCode')},
+                ),
                 pinned: true,
                 snap: false,
                 floating: false,

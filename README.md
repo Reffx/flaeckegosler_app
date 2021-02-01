@@ -1,7 +1,11 @@
 # gosler_app
 
-Neu in build 13 (1.3.7?)
+Neu in build 14 (1.3.8)
+- Schnitzeljadt funktionalitäten: kursivQuiz, GalleryQuiz, google Maps
+
+Neu in build 13 (1.3.7)
 - Verbesserter Zoom- und Rotationsmechanismus beim Betrachten einzelner Bildern in der Galerie
+
 
 ## Getting Started
 

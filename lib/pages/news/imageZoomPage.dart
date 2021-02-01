@@ -1,46 +1,203 @@
-import 'dart:io';
-
+import 'package:Flaeckegosler/pages/Schnitzeljadg/models/place.dart';
+import 'package:Flaeckegosler/pages/Schnitzeljadg/models/placeProvider.dart';
+import 'package:Flaeckegosler/pages/Schnitzeljadg/quizzMap.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
+import 'package:provider/provider.dart';
 
-class SimplePhotoViewPage extends StatelessWidget {
+class SimplePhotoViewPage extends StatefulWidget {
   final String galleryLink;
 
   SimplePhotoViewPage(this.galleryLink);
 
   @override
+  _SimplePhotoViewPageState createState() => _SimplePhotoViewPageState();
+}
+
+class _SimplePhotoViewPageState extends State<SimplePhotoViewPage> {
+  PhotoViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = PhotoViewController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  getRotation() {
+    setState(() {
+      controller.rotation;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    String reportedByName;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(''),
-        actions: <Widget>[
+    if (widget.galleryLink ==
+        'https://flaeckegosler.ch/site/assets/files/2446/waykicki.jpg') {
+      String reportedByName;
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(''),
+          /*  actions: <Widget>[                       //Wegen der Schnitzeljadg deaktiviert
           IconButton(
             icon: Icon(
               Icons.announcement_rounded,
               color: Colors.white,
             ),
-            onPressed: () => reportPictureDialog(context, galleryLink),
+            onPressed: () => reportPictureDialog(context, widget.galleryLink),
           )
-        ],
-      ),
-      body: PhotoView(
-        imageProvider: NetworkImage(
-          galleryLink,
+        ],*/
         ),
-        // Contained = the smallest possible size to fit one dimension of the screen
-        minScale: PhotoViewComputedScale.contained * 0.8,
-        // Covered = the smallest possible size to fit the whole screen
-        maxScale: PhotoViewComputedScale.covered * 2,
-        enableRotation: true,
-        // Set the background color to the "classic white"
-        backgroundDecoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
+        body: GestureDetector(
+          onTapCancel: () {
+            setState(() {
+              _getRotations();
+            });
+          },
+          child: Stack(
+            children: <Widget>[
+              PhotoView(
+                controller: controller,
+                imageProvider: NetworkImage(
+                  widget.galleryLink,
+                ),
+                // Contained = the smallest possible size to fit one dimension of the screen
+                minScale: PhotoViewComputedScale.contained * 0.8,
+                // Covered = the smallest possible size to fit the whole screen
+                maxScale: PhotoViewComputedScale.covered * 2,
+                enableRotation: true,
+                // Set the background color to the "classic white"
+                backgroundDecoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                ),
+              ),
+              _getStack(),
+              Container(
+                child: _getRotations(),
+                alignment: Alignment.topCenter,
+              ),
+            ],
+          ),
         ),
-      ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(''),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.announcement_rounded,
+                color: Colors.white,
+              ),
+              onPressed: () => reportPictureDialog(context, widget.galleryLink),
+            )
+          ],
+        ),
+        body: PhotoView(
+          imageProvider: NetworkImage(
+            widget.galleryLink,
+          ),
+          // Contained = the smallest possible size to fit one dimension of the screen
+          minScale: PhotoViewComputedScale.contained * 0.8,
+          // Covered = the smallest possible size to fit the whole screen
+          maxScale: PhotoViewComputedScale.covered * 2,
+          enableRotation: true,
+          // Set the background color to the "classic white"
+          backgroundDecoration: BoxDecoration(
+            color: Theme.of(context).canvasColor,
+          ),
+        ),
+      );
+    }
+  }
+
+  _getRotations() {
+    return FlatButton(
+      onPressed: () => {
+        print(controller.rotation),
+        setState(() {
+          controller.rotation;
+        })
+      },
+      child: getSickText(controller.rotation),
     );
+  }
+
+  getSickText(rotation) {
+    if (rotation <= 0) {
+      return Text(
+        "😌: " + controller.rotation.toString(),
+        style: TextStyle(fontSize: 25),
+      );
+    } else if (rotation < 4) {
+      return Text(
+        "😑: " + controller.rotation.toString(),
+        style: TextStyle(fontSize: 25),
+      );
+    } else if (rotation < 12) {
+      return Text(
+        "😖: " + controller.rotation.toString(),
+        style: TextStyle(fontSize: 25),
+      );
+    } else if (rotation < 18) {
+      return Text(
+        "😵: " + controller.rotation.toString(),
+        style: TextStyle(fontSize: 25),
+      );
+    } else if (rotation < 24) {
+      return Text(
+        "🤢: " + controller.rotation.toString(),
+        style: TextStyle(fontSize: 25),
+      );
+    } else {
+      return Text(
+        "🤮: " + controller.rotation.toString(),
+        style: TextStyle(fontSize: 25),
+      );
+    }
+  }
+
+  _getStack() {
+    var _latitude = Provider.of<PlaceProvider>(context, listen: false)
+        .allEvents
+        .elementAt(1)
+        .latitude;
+    var _longitude = Provider.of<PlaceProvider>(context, listen: false)
+        .allEvents
+        .elementAt(1)
+        .longitude;
+    if (controller.rotation > 30.0) {
+      return Center(
+        child: AlertDialog(
+          title: Text("Mir ist ganz schwindelig! 🤮🤮🤮"),
+          actions: [
+            FlatButton(
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (ctx) => QuizzMap(
+                    initialLocation: PlaceLocation(
+                        latitude: _latitude, longitude: _longitude),
+                    isSelecting: false,
+                  ),
+                ),
+              ),
+              child: Text("Okay"),
+            ),
+          ],
+          elevation: 24,
+        ),
+      );
+    } else
+      return Container();
   }
 }
 
