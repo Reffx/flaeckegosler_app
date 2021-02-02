@@ -1,5 +1,13 @@
 # gosler_app
 
+Neu in build 16 (1.4.0)
+- Snake funktioniert und soweit fehlerfrei!
+- Vier "Quizzes" nun abgeschlossen!
+
+Neu in build 15 (1.3.9)
+- Secret Codes für verschiedenste Maps hinzufügen
+- DrinkQuizz 
+
 Neu in build 14 (1.3.8)
 - Schnitzeljadt funktionalitäten: kursivQuiz, GalleryQuiz, google Maps
 

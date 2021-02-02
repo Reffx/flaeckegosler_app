@@ -15,7 +15,7 @@ class SecretCodePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("hello"),
+          title: Text("Secret Area"),
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -48,9 +48,9 @@ class SecretCodePage extends StatelessWidget {
                           keyboardType: TextInputType.text,
                           onFieldSubmitted: (value) {
                             text = '';
-                            if (value.toString() == 'kursiv!') {
+                            if (value.toString() == 'kursiv') {
                               Navigator.pushNamed(context, '/fettQuizz'); //map1
-                            } else if (value.toString() == 'Schnääps!') {
+                            } else if (value.toString() == 'Schnääps') {
                               Navigator.pushNamed(
                                   context, '/drinkQuizz'); //map2
                             } else if (value.toString() == 'kayCheat_2000') {
@@ -68,9 +68,8 @@ class SecretCodePage extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            } else if (value.toString() ==
-                                '_Bodechlapfhöchi2020') {
-                              //map 4
+                            } else if (value.toString() == 'Verblüffend!') {
+                              //Snake highscore 25-29
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
@@ -146,7 +145,8 @@ class SecretCodePage extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            } else if (value.toString() == 'map9') {
+                            } else if (value.toString() ==
+                                '_Bodechlapfhöchi2020!') {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
