@@ -50,7 +50,7 @@ class SecretCodePage extends StatelessWidget {
                             text = '';
                             if (value.toString() == 'kursiv') {
                               Navigator.pushNamed(context, '/fettQuizz'); //map1
-                            } else if (value.toString() == 'Schnääps') {
+                            } else if (value.toString() == 'schnääps') {
                               Navigator.pushNamed(
                                   context, '/drinkQuizz'); //map2
                             } else if (value.toString() == 'kayCheat_2000') {
@@ -68,8 +68,9 @@ class SecretCodePage extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            } else if (value.toString() == 'Verblüffend!') {
-                              //Snake highscore 25-29
+                            } else if (value.toString() == 'Verblüffend!' ||
+                                value.toString() == 'verblüffend') {
+                              //Snake highscore 27-29
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
@@ -160,7 +161,7 @@ class SecretCodePage extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            } else if (value.toString() == 'Snake') {
+                            } else if (value.toString() == 'snake') {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   fullscreenDialog: true,

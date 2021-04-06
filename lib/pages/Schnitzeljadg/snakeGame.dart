@@ -18,8 +18,8 @@ class _SnakeGameState extends State<SnakeGame> {
   var _isLoading = false;
   var dropdownValue = 'Easy';
 
-  final int squaresPerRow = 20;
-  final int squaresPerCol = 40;
+  final int squaresPerRow = 15;
+  final int squaresPerCol = 25;
   final fontStyle = TextStyle(color: Colors.white, fontSize: 20);
   var duration = Duration(milliseconds: 300);
   final randomGen = Random();
