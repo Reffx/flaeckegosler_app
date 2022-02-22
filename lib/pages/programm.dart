@@ -160,7 +160,7 @@ class ProgrammPage extends StatelessWidget {
               ),
               SizedBox(width: 10),
               Text(
-                '(intern)',
+                '(intern), BCH',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -271,7 +271,7 @@ class ProgrammPage extends StatelessWidget {
               ),
               SizedBox(width: 10),
               Text(
-                'Flecken',
+                'Gerbematt',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -348,26 +348,7 @@ class ProgrammPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                '15.45',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 20),
-              Text(
-                'Ständli,',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 10),
-              Text(
-                'Auto AG',
-                style: _buildProgrammTextStyle(),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '16.20',
+                '16.00',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 20),
@@ -440,12 +421,12 @@ class ProgrammPage extends StatelessWidget {
               ),
               SizedBox(width: 20),
               Text(
-                'Rainer Umzug,',
+                'Rothenburger Fasnacht,',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 10),
               Text(
-                'Rain',
+                'Gerbematt',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -454,52 +435,17 @@ class ProgrammPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Anschl.',
+                'Abend (23 Uhr)',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 20),
               Text(
-                'Auftritt Schulhaus,',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 10),
-              Text('Rain', style: _buildProgrammTextStyle()),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '18.15',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 20),
-              Text(
-                'Einzug Monster,',
+                'Raguball,',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 10),
               Text(
-                'Sursee',
-                style: _buildProgrammTextStyle(),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Abend',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 20),
-              Text(
-                'diverse Auftritte,',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 10),
-              Text(
-                'Sursee',
+                'MZH Rain',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -557,52 +503,33 @@ class ProgrammPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                '14.00',
+                '13.00',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 20),
               Text(
-                'Eibeler Umzug,',
+                'Fasnacht Littau,',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 10),
-              Text('Inwil', style: _buildProgrammTextStyle()),
+              Text('Dorfschulhaus Littau', style: _buildProgrammTextStyle()),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Anschl.',
+                '20.00',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 20),
               Text(
-                'Dörflifäscht,',
+                'Fasnacht Emmen,',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 10),
               Text(
-                'Inwil',
-                style: _buildProgrammTextStyle(),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Abend',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 20),
-              Text(
-                'Raguball (23 Uhr),',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 10),
-              Text(
-                'Rain',
+                'Gersag',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -641,7 +568,7 @@ class ProgrammPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                '10.00',
+                '10.30',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 20),
@@ -679,17 +606,36 @@ class ProgrammPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                '18.15',
+                '16.30',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 20),
               Text(
-                'Auftritt Schweizerhof,',
+                'Gässle,',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 10),
               Text(
                 'Luzern',
+                style: _buildProgrammTextStyle(),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '18.00',
+                style: _buildProgrammTextStyle(),
+              ),
+              SizedBox(width: 20),
+              Text(
+                'Freier Abend,',
+                style: _buildProgrammTextStyle(),
+              ),
+              SizedBox(width: 10),
+              Text(
+                '',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -730,12 +676,12 @@ class ProgrammPage extends StatelessWidget {
               ),
               SizedBox(width: 20),
               Text(
-                'Kinderumzug,',
+                'Umzug,',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 10),
               Text(
-                'Rothenburg',
+                'Hochdorf',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -755,25 +701,6 @@ class ProgrammPage extends StatelessWidget {
               SizedBox(width: 10),
               Text(
                 'Luzern',
-                style: _buildProgrammTextStyle(),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '01.30',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 20),
-              Text(
-                'Schmette-Feete,',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 10),
-              Text(
-                'Rothenburg',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -814,12 +741,12 @@ class ProgrammPage extends StatelessWidget {
               ),
               SizedBox(width: 20),
               Text(
-                'Kinderumzug,',
+                'Umzug,',
                 style: _buildProgrammTextStyle(),
               ),
               SizedBox(width: 10),
               Text(
-                'Rothenburg',
+                'Hochdorf',
                 style: _buildProgrammTextStyle(),
               ),
             ],
@@ -839,25 +766,6 @@ class ProgrammPage extends StatelessWidget {
               SizedBox(width: 10),
               Text(
                 'Luzern',
-                style: _buildProgrammTextStyle(),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '01.30',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 20),
-              Text(
-                'Schmette-Feete,',
-                style: _buildProgrammTextStyle(),
-              ),
-              SizedBox(width: 10),
-              Text(
-                'Rothenburg',
                 style: _buildProgrammTextStyle(),
               ),
             ],
